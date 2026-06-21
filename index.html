@@ -4,321 +4,235 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#0F766E">
-<title>검단 신혼집 하자 보수 결과</title>
-<meta property="og:title" content="검단 신혼집 하자 보수 결과">
-<meta property="og:description" content="우리 신혼집 하자 보수 전/후 사진으로 확인하세요">
+<title>검단 이편한세상 웰카운티 하자 보수 현황</title>
+<meta property="og:title" content="검단 이편한세상 웰카운티 하자 보수 현황">
+<meta property="og:description" content="우리 집 하자 보수 전/후를 공간별로 확인하세요">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #F5F7F6;
-  --card: #FFFFFF;
-  --text: #1A2B28;
-  --text-soft: #4A5C58;
-  --text-muted: #8A9794;
-  --border: #E2E8E6;
-  --teal: #0F766E;
-  --teal-dark: #115E56;
-  --teal-light: #CCFBF1;
-  --teal-bg: #F0FDFA;
-  --done: #059669;
-  --done-bg: #ECFDF5;
-  --done-border: #6EE7B7;
-  --wait: #D97706;
-  --wait-bg: #FFFBEB;
-  --wait-border: #FCD34D;
-  --critical: #DC2626;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.05);
-  --shadow-md: 0 4px 14px rgba(0,0,0,.07);
-  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
-  --fs-xs: 17px;
-  --fs-sm: 19px;
-  --fs-base: 21px;
-  --fs-md: 24px;
-  --fs-lg: 28px;
-  --fs-xl: 34px;
-  --fs-xxl: 46px;
+:root{
+  --bg:#F4F6F5; --card:#FFFFFF; --text:#16241F; --soft:#46554F; --muted:#7E8C87;
+  --line:#E4EAE7; --teal:#0F766E; --tealD:#0B5F58; --tealBg:#ECFBF7; --tealLine:#A7F3D6;
+  --done:#067A53; --doneBg:#E9FBF2; --doneLine:#7BE0B4;
+  --wait:#C26A05; --waitBg:#FFF6E8; --waitLine:#FBD491;
+  --red:#D43A2F;
+  --sh-sm:0 1px 3px rgba(0,0,0,.05); --sh-md:0 4px 14px rgba(0,0,0,.07); --sh-lg:0 14px 34px rgba(0,0,0,.14);
+  --f-xs:16px; --f-sm:18px; --f:20px; --f-md:23px; --f-lg:27px; --f-xl:32px; --f-xxl:42px;
+  --hdr:66px; --side:340px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { font-size: 16px; }
-body {
-  font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  background: var(--bg); color: var(--text);
-  line-height: 1.6; font-size: var(--fs-base);
-  -webkit-font-smoothing: antialiased;
-  padding-bottom: env(safe-area-inset-bottom);
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;}
+body{
+  font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6; font-size:var(--f);
+  -webkit-font-smoothing:antialiased;
 }
-.app-header {
-  position: sticky; top: 0; z-index: 50;
-  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
-  color: #fff; padding: 20px;
-  padding-top: max(20px, env(safe-area-inset-top));
-  display: flex; align-items: center; gap: 14px;
-  box-shadow: var(--shadow-md);
-}
-.btn-back {
-  width: 50px; height: 50px;
-  display: none; align-items: center; justify-content: center;
-  background: rgba(255,255,255,.18);
-  border: 0; border-radius: 14px;
-  color: #fff; font-size: 30px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
-}
-.btn-back:active { background: rgba(255,255,255,.3); }
-.app-title { font-size: var(--fs-md); font-weight: 700; flex: 1; letter-spacing: -.02em; }
-.app-sub { font-size: var(--fs-xs); color: rgba(255,255,255,.85); margin-top: 3px; }
+button{font-family:inherit;cursor:pointer;}
 
-.intro {
-  margin: 18px 18px 0; background: var(--card);
-  border-radius: 22px; padding: 28px 26px;
-  box-shadow: var(--shadow-md); text-align: center;
+/* ===== 상단바 ===== */
+.topbar{
+  position:sticky; top:0; z-index:100; height:var(--hdr);
+  background:linear-gradient(135deg,var(--teal),var(--tealD)); color:#fff;
+  display:flex; align-items:center; gap:12px; padding:0 16px;
+  padding-top:env(safe-area-inset-top); box-shadow:var(--sh-md);
 }
-.intro-emoji { font-size: 52px; margin-bottom: 12px; }
-.intro-title {
-  font-size: var(--fs-lg); font-weight: 800;
-  color: var(--teal-dark); letter-spacing: -.03em;
-  line-height: 1.35; margin-bottom: 14px;
+.icon-btn{
+  width:50px;height:50px;flex:0 0 50px; border:0; border-radius:14px;
+  background:rgba(255,255,255,.16); color:#fff; font-size:26px;
+  display:flex;align-items:center;justify-content:center;
 }
-.intro-text { font-size: var(--fs-base); color: var(--text-soft); line-height: 1.65; }
-.intro-text b { color: var(--done); font-weight: 800; }
+.icon-btn:active{background:rgba(255,255,255,.3);}
+.titles{flex:1;min-width:0;}
+.t1{font-size:var(--f-md);font-weight:800;letter-spacing:-.02em;line-height:1.25;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t2{font-size:var(--f-xs);color:rgba(255,255,255,.85);margin-top:2px;}
 
-/* 통계 3분할 */
-.stats {
-  margin: 18px 18px 0;
-  background: var(--card); border-radius: 20px;
-  padding: 24px 22px; box-shadow: var(--shadow-md);
+/* ===== 레이아웃 ===== */
+.layout{display:flex;align-items:flex-start;}
+.sidebar{
+  flex:0 0 var(--side); width:var(--side);
+  position:sticky; top:var(--hdr); height:calc(100vh - var(--hdr));
+  overflow-y:auto; background:var(--card); border-right:1px solid var(--line);
+  padding:14px 12px 40px;
 }
-.stats-title {
-  font-size: var(--fs-sm); font-weight: 700;
-  color: var(--text-soft); margin-bottom: 16px;
-  text-align: center;
-}
-.stats-row {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px; text-align: center;
-}
-.stat {
-  padding: 16px 8px; border-radius: 14px;
-  border: 2px solid;
-}
-.stat.total { background: var(--teal-bg); border-color: var(--teal-light); }
-.stat.done { background: var(--done-bg); border-color: var(--done-border); }
-.stat.wait { background: var(--wait-bg); border-color: var(--wait-border); }
-.stat-num { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -.04em; line-height: 1; }
-.stat.total .stat-num { color: var(--teal); }
-.stat.done .stat-num { color: var(--done); }
-.stat.wait .stat-num { color: var(--wait); }
-.stat-label { font-size: var(--fs-xs); font-weight: 700; color: var(--text-soft); margin-top: 6px; line-height: 1.3; }
+.scrim{display:none;}
+.main{flex:1 1 auto;min-width:0;padding:0 0 60px;}
 
-.stats-compare {
-  display: flex; align-items: stretch; gap: 8px; margin-top: 16px;
+/* ===== 사이드 메뉴 ===== */
+.nav-home{
+  width:100%; text-align:left; border:2px solid var(--tealLine);
+  background:var(--tealBg); color:var(--tealD); font-weight:800;
+  font-size:var(--f-sm); padding:16px 16px; border-radius:14px; margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
 }
-.stats-compare .cmp {
-  flex: 1; border: 2px solid var(--border); border-radius: 14px;
-  padding: 14px 8px; text-align: center; background: var(--bg);
+.nav-home.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);
+  padding:4px 8px 8px;letter-spacing:.02em;}
+.nav-group{border-bottom:1px solid var(--line);}
+.nav-loc{
+  width:100%;display:flex;align-items:center;gap:8px;
+  background:none;border:0;padding:15px 8px;font-size:var(--f-sm);font-weight:700;
+  color:var(--text);text-align:left;border-radius:10px;
 }
-.stats-compare .cmp.sys { border-color: var(--teal-light); background: var(--teal-bg); }
-.stats-compare .cmp.photo { border-color: var(--done-border); background: var(--done-bg); }
-.cmp-num { font-size: var(--fs-lg); font-weight: 800; line-height: 1; letter-spacing: -.03em; }
-.cmp.sys .cmp-num { color: var(--teal); }
-.cmp.photo .cmp-num { color: var(--done); }
-.cmp-label { font-size: var(--fs-xs); font-weight: 700; color: var(--text-soft); margin-top: 6px; line-height: 1.35; }
-.cmp-arrow { display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-muted); font-weight: 700; }
+.nav-loc:active{background:var(--bg);}
+.nav-loc.active{color:var(--tealD);}
+.nav-loc-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.nav-loc-meta{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+.dot.done{background:var(--done);} .dot.wait{background:var(--wait);}
+.nav-count{font-size:var(--f-xs);font-weight:800;color:var(--muted);
+  background:var(--bg);border-radius:999px;padding:2px 10px;min-width:34px;text-align:center;}
+.nav-caret{font-size:15px;color:var(--muted);transition:transform .2s;}
+.nav-group.open .nav-caret{transform:rotate(180deg);}
+.nav-items{display:none;padding:2px 0 12px;}
+.nav-group.open .nav-items{display:block;}
+.nav-item{
+  width:100%;display:flex;align-items:flex-start;gap:10px;
+  background:none;border:0;text-align:left;padding:11px 10px 11px 14px;
+  border-left:3px solid transparent;border-radius:0 10px 10px 0;
+}
+.nav-item:active{background:var(--bg);}
+.nav-item.active{background:var(--tealBg);border-left-color:var(--teal);}
+.ni-status{font-size:18px;flex:0 0 auto;line-height:1.4;}
+.ni-text{min-width:0;}
+.ni-title{display:block;font-size:var(--f-xs);font-weight:700;color:var(--text);line-height:1.35;}
+.ni-label{display:block;font-size:14px;color:var(--muted);margin-top:2px;}
 
-.stats-note {
-  margin-top: 14px; padding: 14px 16px;
-  background: var(--bg); border-radius: 12px;
-  font-size: var(--fs-xs); color: var(--text-soft);
-  line-height: 1.6;
-}
-.stats-note b { color: var(--done); font-weight: 800; }
+/* ===== 홈 ===== */
+.wrap{max-width:760px;margin:0 auto;padding:18px;}
+.intro{background:var(--card);border-radius:22px;padding:28px 24px;box-shadow:var(--sh-md);text-align:center;}
+.intro-emoji{font-size:50px;margin-bottom:10px;}
+.intro-title{font-size:var(--f-lg);font-weight:800;color:var(--tealD);line-height:1.35;letter-spacing:-.02em;margin-bottom:14px;}
+.intro-text{font-size:var(--f);color:var(--soft);line-height:1.7;}
+.intro-text b{color:var(--done);font-weight:800;}
 
-.section-head {
-  margin: 30px 20px 14px;
-  display: flex; align-items: center; gap: 10px;
-}
-.section-head .dot { width: 14px; height: 14px; border-radius: 50%; }
-.section-head.done .dot { background: var(--done); }
-.section-head.wait .dot { background: var(--wait); }
-.section-head h2 { font-size: var(--fs-md); font-weight: 800; color: var(--text); letter-spacing: -.02em; }
-.section-head .count { margin-left: auto; font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
-.section-desc {
-  margin: 0 20px 14px; font-size: var(--fs-xs);
-  color: var(--text-muted); line-height: 1.5;
-}
+.stats{background:var(--card);border-radius:20px;padding:24px 20px;box-shadow:var(--sh-md);margin-top:18px;}
+.stats-title{font-size:var(--f-sm);font-weight:700;color:var(--soft);text-align:center;margin-bottom:16px;}
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;}
+.stat{padding:16px 6px;border-radius:14px;border:2px solid;}
+.stat.total{background:var(--tealBg);border-color:var(--tealLine);}
+.stat.done{background:var(--doneBg);border-color:var(--doneLine);}
+.stat.wait{background:var(--waitBg);border-color:var(--waitLine);}
+.stat-num{font-size:var(--f-xl);font-weight:800;line-height:1;letter-spacing:-.04em;}
+.stat.total .stat-num{color:var(--teal);} .stat.done .stat-num{color:var(--done);} .stat.wait .stat-num{color:var(--wait);}
+.stat-label{font-size:var(--f-xs);font-weight:700;color:var(--soft);margin-top:6px;line-height:1.3;}
+.compare{display:flex;align-items:stretch;gap:8px;margin-top:16px;}
+.cmp{flex:1;border:2px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;background:var(--bg);}
+.cmp.sys{border-color:var(--tealLine);background:var(--tealBg);}
+.cmp.photo{border-color:var(--doneLine);background:var(--doneBg);}
+.cmp-num{font-size:var(--f-lg);font-weight:800;line-height:1;}
+.cmp.sys .cmp-num{color:var(--teal);} .cmp.photo .cmp-num{color:var(--done);}
+.cmp-label{font-size:var(--f-xs);font-weight:700;color:var(--soft);margin-top:6px;line-height:1.3;}
+.cmp-arrow{display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--muted);font-weight:700;}
+.note{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:var(--f-xs);color:var(--soft);line-height:1.6;}
+.note b{color:var(--done);font-weight:800;}
+.hint{margin-top:16px;padding:16px 18px;border:2px dashed var(--tealLine);border-radius:14px;
+  background:var(--tealBg);color:var(--tealD);font-size:var(--f-sm);font-weight:700;text-align:center;line-height:1.6;}
 
-.list { padding: 0 18px 40px; }
-.card {
-  background: var(--card); border: 1.5px solid var(--border);
-  border-radius: 20px; margin-bottom: 14px;
-  overflow: hidden; cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.card:active { transform: scale(.99); box-shadow: var(--shadow-md); }
-.card-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
-.card-photo { aspect-ratio: 4/3; background: #E8EEEC center/cover no-repeat; position: relative; }
-.card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.card-photo .ba-label {
-  position: absolute; top: 8px; left: 8px;
-  padding: 4px 12px; border-radius: 8px;
-  font-size: var(--fs-xs); font-weight: 800; color: #fff;
-}
-.card-photo.before .ba-label { background: rgba(220,38,38,.92); }
-.card-photo.after .ba-label { background: rgba(5,150,105,.92); }
-.card-photos.single { grid-template-columns: 1fr; }
-.card-photos.single .card-photo { aspect-ratio: 16/9; }
-.card-body { padding: 18px 20px; }
-.card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.badge {
-  font-size: var(--fs-xs); font-weight: 800;
-  padding: 5px 12px; border-radius: 999px;
-}
-.badge.done { background: var(--done-bg); color: var(--done); border: 1.5px solid var(--done-border); }
-.badge.wait { background: var(--wait-bg); color: var(--wait); border: 1.5px solid var(--wait-border); }
-.card-loc { font-size: var(--fs-md); font-weight: 800; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
-.card-desc { font-size: var(--fs-sm); color: var(--text-soft); margin-top: 6px; line-height: 1.5; }
-.card-date { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 10px; font-weight: 600; }
+/* ===== 공간/상세 공통 ===== */
+.page-head{padding:22px 18px 6px;max-width:760px;margin:0 auto;}
+.page-head .ph-loc{font-size:var(--f-xl);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;}
+.page-head .ph-sub{font-size:var(--f-sm);color:var(--soft);margin-top:6px;}
+.ph-sub b.done{color:var(--done);} .ph-sub b.wait{color:var(--wait);}
 
-.detail { padding: 0 0 60px; display: none; }
-.detail.active { display: block; }
-.home { display: block; }
-.home.hidden { display: none; }
-.detail-hero {
-  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
-  padding: 24px 22px 28px; color: #fff;
-}
-.detail-hero .loc { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -.03em; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
-.detail-hero .desc { font-size: var(--fs-base); color: rgba(255,255,255,.9); line-height: 1.5; }
-.detail-status {
-  margin: -16px 18px 0; background: var(--card);
-  border-radius: 18px; padding: 20px 22px;
-  box-shadow: var(--shadow-md);
-  display: flex; align-items: center; gap: 14px;
-}
-.detail-status-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; }
-.detail-status.done .detail-status-icon { background: var(--done-bg); }
-.detail-status.wait .detail-status-icon { background: var(--wait-bg); }
-.detail-status-text { flex: 1; }
-.detail-status-title { font-size: var(--fs-md); font-weight: 800; letter-spacing: -.02em; }
-.detail-status.done .detail-status-title { color: var(--done); }
-.detail-status.wait .detail-status-title { color: var(--wait); }
-.detail-status-sub { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+.list{max-width:760px;margin:0 auto;padding:12px 18px 20px;}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;margin-bottom:14px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;}
+.card:active{transform:scale(.99);box-shadow:var(--sh-md);}
+.card-photos{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);}
+.card-photos.single{grid-template-columns:1fr;}
+.card-photo{aspect-ratio:4/3;position:relative;background:#E8EEEC;}
+.card-photos.single .card-photo{aspect-ratio:16/9;}
+.card-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.ba-label{position:absolute;top:8px;left:8px;padding:4px 12px;border-radius:8px;font-size:var(--f-xs);font-weight:800;color:#fff;}
+.card-photo.before .ba-label{background:rgba(212,58,47,.92);}
+.card-photo.after .ba-label{background:rgba(6,122,83,.92);}
+.card-body{padding:16px 18px;}
+.badge{font-size:var(--f-xs);font-weight:800;padding:5px 12px;border-radius:999px;display:inline-block;}
+.badge.done{background:var(--doneBg);color:var(--done);border:1.5px solid var(--doneLine);}
+.badge.wait{background:var(--waitBg);color:var(--wait);border:1.5px solid var(--waitLine);}
+.card-title{font-size:var(--f-md);font-weight:800;letter-spacing:-.02em;margin-top:10px;line-height:1.4;}
+.card-ident{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.chip{font-size:14px;font-weight:700;color:var(--soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 10px;}
+.chip.num{color:var(--teal);background:var(--tealBg);border-color:var(--tealLine);}
+.card-date{font-size:var(--f-xs);color:var(--muted);margin-top:10px;font-weight:600;}
 
-.photo-section { padding: 26px 18px 0; }
-.photo-block { margin-bottom: 26px; }
-.photo-block-title { font-size: var(--fs-md); font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; letter-spacing: -.02em; }
-.photo-block-title .tag { padding: 5px 14px; border-radius: 10px; font-size: var(--fs-sm); color: #fff; font-weight: 800; }
-.photo-block.before .tag { background: var(--critical); }
-.photo-block.after .tag { background: var(--done); }
-.photo-block-title .label { color: var(--text); }
-.photo-grid { display: flex; flex-direction: column; gap: 12px; }
-.photo-grid img {
-  width: 100%; height: auto; border-radius: 16px;
-  box-shadow: var(--shadow-sm); background: #E8EEEC;
-  cursor: zoom-in;
-}
-.arrow-divider { text-align: center; font-size: 40px; color: var(--teal); margin: 8px 0 20px; }
+/* ===== 상세 ===== */
+.detail-hero{background:linear-gradient(135deg,var(--teal),var(--tealD));color:#fff;padding:24px 20px 28px;}
+.detail-hero .dh-wrap{max-width:760px;margin:0 auto;}
+.detail-hero .loc{font-size:var(--f-xl);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;}
+.detail-hero .desc{font-size:var(--f);color:rgba(255,255,255,.92);line-height:1.5;margin-top:8px;}
+.detail-status{max-width:760px;margin:-16px auto 0;background:var(--card);border-radius:18px;padding:18px 20px;box-shadow:var(--sh-md);display:flex;align-items:center;gap:14px;width:calc(100% - 36px);}
+.ds-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex:0 0 auto;}
+.detail-status.done .ds-icon{background:var(--doneBg);} .detail-status.wait .ds-icon{background:var(--waitBg);}
+.ds-title{font-size:var(--f-md);font-weight:800;}
+.detail-status.done .ds-title{color:var(--done);} .detail-status.wait .ds-title{color:var(--wait);}
+.ds-sub{font-size:var(--f-xs);color:var(--muted);margin-top:2px;font-weight:600;}
 
-.wait-notice {
-  margin: 0 18px; padding: 20px 22px;
-  background: var(--wait-bg); border: 2px solid var(--wait-border);
-  border-radius: 16px; font-size: var(--fs-sm);
-  line-height: 1.6; color: #78350F;
-}
-.wait-notice b { display: block; font-weight: 800; margin-bottom: 6px; font-size: var(--fs-base); }
-.no-photo { padding: 50px 20px; text-align: center; color: var(--text-muted); background: var(--bg); border-radius: 16px; font-size: var(--fs-sm); }
+.ident-box{max-width:760px;margin:18px auto 0;padding:0 18px;}
+.ident-box .ib-title{font-size:var(--f-xs);font-weight:700;color:var(--muted);margin-bottom:8px;}
+.ident-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.ident-chips .chip{font-size:var(--f-xs);padding:6px 14px;}
+.dl-link{display:flex;align-items:center;justify-content:center;gap:10px;max-width:760px;margin:16px auto 0;width:calc(100% - 36px);
+  background:var(--teal);color:#fff;font-size:var(--f-sm);font-weight:800;text-decoration:none;
+  padding:16px;border-radius:14px;box-shadow:var(--sh-sm);}
+.dl-link:active{background:var(--tealD);}
+.dl-hint{max-width:760px;margin:8px auto 0;padding:0 18px;font-size:14px;color:var(--muted);text-align:center;}
 
-.modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.92); align-items: center; justify-content: center; padding: 20px; }
-.modal.active { display: flex; }
-.modal img { max-width: 100%; max-height: 100%; border-radius: 8px; }
-.modal-close { position: absolute; top: max(20px, env(safe-area-inset-top)); right: 20px; width: 50px; height: 50px; background: rgba(255,255,255,.2); border: 0; border-radius: 50%; color: #fff; font-size: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.photos{max-width:760px;margin:0 auto;padding:24px 18px 0;}
+.pblock{margin-bottom:24px;}
+.pblock-title{font-size:var(--f-md);font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:12px;letter-spacing:-.02em;}
+.pblock-title .tag{padding:5px 14px;border-radius:10px;font-size:var(--f-sm);color:#fff;font-weight:800;}
+.pblock.before .tag{background:var(--red);} .pblock.after .tag{background:var(--done);}
+.pgrid{display:flex;flex-direction:column;gap:12px;}
+.pgrid img{width:100%;height:auto;border-radius:16px;box-shadow:var(--sh-sm);background:#E8EEEC;cursor:zoom-in;}
+.arrow{text-align:center;font-size:38px;color:var(--teal);margin:6px 0 18px;}
+.wait-notice{max-width:760px;margin:0 auto;padding:20px;}
+.wait-notice .wn-in{background:var(--waitBg);border:2px solid var(--waitLine);border-radius:16px;padding:18px 20px;font-size:var(--f-sm);line-height:1.6;color:#7A4408;}
+.wait-notice b{display:block;font-weight:800;margin-bottom:6px;font-size:var(--f);}
+.no-photo{padding:46px 20px;text-align:center;color:var(--muted);background:var(--bg);border-radius:16px;}
 
-.loading { text-align: center; padding: 80px 20px; color: var(--text-muted); font-size: var(--fs-base); }
-.spinner { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--teal); border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* ===== 모달 ===== */
+.modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:16px;}
+.modal.active{display:flex;}
+.modal img{max-width:100%;max-height:100%;border-radius:8px;}
+.modal-close{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:50px;height:50px;background:rgba(255,255,255,.2);border:0;border-radius:50%;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;}
 
-.footer { text-align: center; padding: 34px 20px; font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.8; }
-.footer b { color: var(--text-soft); }
+.foot{max-width:760px;margin:0 auto;text-align:center;padding:34px 20px;font-size:var(--f-xs);color:var(--muted);line-height:1.8;}
+.foot b{color:var(--soft);}
 
-@media (min-width: 700px) {
-  .intro, .stats, .section-head, .section-desc, .list, .detail-status, .photo-section, .wait-notice {
-    max-width: 680px; margin-left: auto; margin-right: auto;
+/* ===== 모바일 ===== */
+@media (max-width:919px){
+  .sidebar{
+    position:fixed;top:0;left:0;height:100vh;width:88%;max-width:360px;z-index:130;
+    transform:translateX(-100%);transition:transform .25s ease;
+    padding-top:calc(14px + env(safe-area-inset-top));box-shadow:var(--sh-lg);
   }
-  .detail-hero { text-align: center; }
+  .sidebar.open{transform:translateX(0);}
+  .scrim{display:block;position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .25s;}
+  .scrim.show{opacity:1;visibility:visible;}
+}
+@media (min-width:920px){
+  .btn-menu{display:none;}
 }
 </style>
 </head>
 <body>
 
-<header class="app-header">
-  <button class="btn-back" id="btnBack">←</button>
-  <div style="flex:1; min-width:0;">
-    <div class="app-title" id="appTitle">우리집 하자 보수 결과</div>
-    <div class="app-sub" id="appSub">검단 신혼집 · 0111동 605호</div>
+<header class="topbar">
+  <button class="icon-btn btn-menu" id="btnMenu" aria-label="공간 메뉴 열기">☰</button>
+  <div class="titles">
+    <div class="t1">검단 이편한세상 웰카운티 하자 보수 현황</div>
+    <div class="t2">0111동 605호</div>
   </div>
+  <button class="icon-btn" id="btnHome" aria-label="처음으로">🏠</button>
 </header>
 
-<div class="home" id="home">
-  <div class="intro">
-    <div class="intro-emoji">🏡</div>
-    <div class="intro-title">우리 신혼집<br>하자 보수 결과예요</div>
-    <div class="intro-text">
-      입주 전 발견한 문제들을<br>
-      건설사에서 고쳐주었어요.<br>
-      <b>보수 전 / 보수 후 사진</b>으로<br>
-      직접 확인해 보세요!
-    </div>
-  </div>
-
-  <div class="stats">
-    <div class="stats-title">전체 진행 상황</div>
-    <div class="stats-row">
-      <div class="stat total">
-        <div class="stat-num" id="statTotal">79</div>
-        <div class="stat-label">전체<br>하자</div>
-      </div>
-      <div class="stat done">
-        <div class="stat-num" id="statPhoto">57</div>
-        <div class="stat-label">사진으로<br>확인됨</div>
-      </div>
-      <div class="stat wait">
-        <div class="stat-num" id="statWait">22</div>
-        <div class="stat-label">사진<br>준비중</div>
-      </div>
-    </div>
-    <div class="stats-compare">
-      <div class="cmp sys"><div class="cmp-num" id="cmpSys">77</div><div class="cmp-label">건설사<br>완료 처리</div></div>
-      <div class="cmp-arrow">›</div>
-      <div class="cmp photo"><div class="cmp-num" id="cmpPhoto">57</div><div class="cmp-label">사진으로<br>확인 가능</div></div>
-    </div>
-    <div class="stats-note" id="statsNote"></div>
-  </div>
-
-  <div class="section-head done">
-    <span class="dot"></span>
-    <h2>보수 완료된 곳</h2>
-    <span class="count" id="countDone"></span>
-  </div>
-  <div class="section-desc">건설사가 고친 후 사진을 등록한 곳이에요. 전/후를 비교해 보세요.</div>
-  <div class="list" id="listDone"></div>
-
-  <div class="section-head wait">
-    <span class="dot"></span>
-    <h2>사진 준비 중인 곳</h2>
-    <span class="count" id="countWait"></span>
-  </div>
-  <div class="section-desc">보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않은 곳이에요.</div>
-  <div class="list" id="listWait"></div>
-
-  <div class="footer">
-    <b>점검일</b> 2026년 5월 9일<br>
-    <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
-    사진을 누르면 크게 볼 수 있어요
-  </div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar"><nav id="nav"></nav></aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="main" id="main"></main>
 </div>
-
-<div class="detail" id="detail"></div>
 
 <div class="modal" id="modal">
   <button class="modal-close" id="modalClose">✕</button>
@@ -327,154 +241,225 @@ body {
 
 <script src="data.js"></script>
 <script>
-const GRADE_KR = { C: "중요", J: "보통", N: "간단" };
-// 카드/상세 미리보기는 가벼운 썸네일, 확대(모달)는 원본을 사용
 const THUMB = p => p.replace('images/', 'thumbs/');
+const DLBASE = 'https://mobileas.dlenc.co.kr/dch7001/';
+function fmtDate(d){ if(!d) return ''; const [y,m,day]=d.split('-'); return `${y}년 ${+m}월 ${+day}일`; }
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-function fmtDate(d) {
-  if (!d) return '';
-  const [y, m, day] = d.split('-');
-  return `${y}년 ${parseInt(m)}월 ${parseInt(day)}일`;
-}
+/* 공간별 그룹 (건수 많은 순). 각 공간 내부는 준비중 먼저, 그다음 등록순 */
+const LOC_MAP={};
+ITEMS.forEach(it=>{ (LOC_MAP[it.loc]=LOC_MAP[it.loc]||[]).push(it); });
+const LOCATIONS=Object.keys(LOC_MAP).map(loc=>{
+  const items=LOC_MAP[loc].slice().sort((a,b)=>{
+    const ad=a.hasAfter?1:0, bd=b.hasAfter?1:0;
+    if(ad!==bd) return ad-bd;            // 준비중(0) 먼저
+    return a.sysno.localeCompare(b.sysno);
+  });
+  return { loc, emoji:items[0].emoji, items,
+           done:items.filter(i=>i.hasAfter).length,
+           wait:items.filter(i=>!i.hasAfter).length };
+}).sort((a,b)=>b.items.length-a.items.length);
+const locIdx = loc => LOCATIONS.findIndex(L=>L.loc===loc);
 
-function showHome() {
-  document.getElementById('home').classList.remove('hidden');
-  document.getElementById('detail').classList.remove('active');
-  document.getElementById('btnBack').style.display = 'none';
-  document.getElementById('appTitle').textContent = '우리집 하자 보수 결과';
-  document.getElementById('appSub').textContent = '검단 신혼집 · 0111동 605호';
-  window.scrollTo(0, 0);
-}
-
-function showDetail(sysno) {
-  const it = ITEMS.find(x => x.sysno === sysno);
-  if (!it) return;
-  const repaired = it.hasAfter;
-
-  let photoHtml = '';
-  if (repaired) {
-    photoHtml = `
-      <div class="photo-section">
-        <div class="photo-block before">
-          <div class="photo-block-title"><span class="tag">전</span><span class="label">보수 전 모습</span></div>
-          <div class="photo-grid">
-            ${it.before.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="보수 전">`).join('')}
-          </div>
-        </div>
-        <div class="arrow-divider">⬇</div>
-        <div class="photo-block after">
-          <div class="photo-block-title"><span class="tag">후</span><span class="label">보수 후 모습</span></div>
-          <div class="photo-grid">
-            ${it.after.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="보수 후">`).join('')}
-          </div>
-        </div>
-      </div>`;
-  } else {
-    photoHtml = `
-      <div class="photo-section">
-        <div class="photo-block before">
-          <div class="photo-block-title"><span class="tag">현재</span><span class="label">현재 모습</span></div>
-          <div class="photo-grid">
-            ${it.before.length ? it.before.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}
-          </div>
-        </div>
-      </div>
-      <div class="wait-notice">
-        <b>아직 사진이 준비 중이에요</b>
-        이 부분은 보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않았어요. 등록되면 다시 안내드릴게요.
-      </div>`;
-  }
-
-  const statusHtml = repaired
-    ? `<div class="detail-status done"><div class="detail-status-icon">✅</div><div class="detail-status-text"><div class="detail-status-title">보수 완료</div><div class="detail-status-sub">${fmtDate(it.repairDate)}에 고쳐졌어요</div></div></div>`
-    : `<div class="detail-status wait"><div class="detail-status-icon">🔧</div><div class="detail-status-text"><div class="detail-status-title">사진 준비 중</div><div class="detail-status-sub">보수 진행 중이거나 사진 등록 전이에요</div></div></div>`;
-
-  document.getElementById('detail').innerHTML = `
-    <div class="detail-hero">
-      <div class="loc">${it.emoji} ${it.loc}</div>
-      <div class="desc">${it.content}</div>
-    </div>
-    ${statusHtml}
-    ${photoHtml}
-    <div class="footer">사진을 누르면 크게 볼 수 있어요</div>`;
-
-  document.getElementById('home').classList.add('hidden');
-  document.getElementById('detail').classList.add('active');
-  document.getElementById('btnBack').style.display = 'flex';
-  document.getElementById('appTitle').textContent = it.loc;
-  document.getElementById('appSub').textContent = it.part;
-  window.scrollTo(0, 0);
-  window.location.hash = sysno;
-}
-
-document.getElementById('btnBack').addEventListener('click', () => { window.location.hash = ''; showHome(); });
-window.addEventListener('hashchange', () => {
-  const h = window.location.hash.slice(1);
-  if (h && ITEMS.find(x => x.sysno === h)) showDetail(h);
-  else showHome();
-});
-
-function openModal(src) {
-  document.getElementById('modalImg').src = src;
-  document.getElementById('modal').classList.add('active');
-}
-document.getElementById('modalClose').addEventListener('click', () => document.getElementById('modal').classList.remove('active'));
-document.getElementById('modal').addEventListener('click', (e) => { if (e.target.id === 'modal') document.getElementById('modal').classList.remove('active'); });
-
-function makeCard(it) {
-  const repaired = it.hasAfter;
-  const badge = repaired
-    ? `<span class="badge done">✅ 보수 완료</span>`
-    : `<span class="badge wait">🔧 사진 준비중</span>`;
-  let photosHtml = '';
-  if (repaired && it.before.length && it.after.length) {
-    photosHtml = `
-      <div class="card-photos">
-        <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">전</span></div>
-        <div class="card-photo after"><img loading="lazy" src="${THUMB(it.after[0])}" alt=""><span class="ba-label">후</span></div>
-      </div>`;
-  } else if (it.before.length) {
-    photosHtml = `
-      <div class="card-photos single">
-        <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">현재</span></div>
-      </div>`;
-  }
-  const dateText = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';
-  return `
-    <div class="card" onclick="showDetail('${it.sysno}')">
-      ${photosHtml}
-      <div class="card-body">
-        <div class="card-top">${badge}</div>
-        <div class="card-loc">${it.emoji} ${it.loc}</div>
-        <div class="card-desc">${it.content}</div>
-        <div class="card-date">${dateText}</div>
+/* ===== 사이드 메뉴 ===== */
+function buildNav(){
+  let h = `<button class="nav-home" id="navHome" onclick="go('home')">🏠 전체 현황</button>
+           <div class="nav-sect">공간별 보기</div>`;
+  LOCATIONS.forEach((L,i)=>{
+    h += `<div class="nav-group" id="g${i}">
+      <button class="nav-loc" onclick="go('loc',${i})">
+        <span class="nav-loc-name">${esc(L.emoji)} ${esc(L.loc)}</span>
+        <span class="nav-loc-meta">
+          <span class="dot ${L.wait? 'wait':'done'}"></span>
+          <span class="nav-count">${L.items.length}</span>
+          <span class="nav-caret">▾</span>
+        </span>
+      </button>
+      <div class="nav-items">
+        ${L.items.map(it=>`
+          <button class="nav-item" id="ni${it.sysno}" onclick="go('item','${it.sysno}')">
+            <span class="ni-status">${it.hasAfter? '✅':'🔧'}</span>
+            <span class="ni-text">
+              <span class="ni-title">${esc(it.content)}</span>
+              <span class="ni-label">${esc(it.part)} · ${esc(it.dtype)} · DL ${it.sysno}</span>
+            </span>
+          </button>`).join('')}
       </div>
     </div>`;
+  });
+  document.getElementById('nav').innerHTML = h;
 }
 
-function init() {
-  const doneItems = ITEMS.filter(x => x.hasAfter);
-  const waitItems = ITEMS.filter(x => !x.hasAfter);
-
-  document.getElementById('statTotal').textContent = STATS.total;
-  document.getElementById('statPhoto').textContent = STATS.photo_verified;
-  document.getElementById('statWait').textContent = STATS.no_after;
-  document.getElementById('cmpSys').textContent = STATS.site_completed;
-  document.getElementById('cmpPhoto').textContent = STATS.photo_verified;
-  document.getElementById('statsNote').innerHTML =
-    `건설사 시스템에는 <b>${STATS.site_completed}곳</b>이 '완료'로 표시돼 있어요. ` +
-    `그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.`;
-
-  document.getElementById('countDone').textContent = `${doneItems.length}곳`;
-  document.getElementById('countWait').textContent = `${waitItems.length}곳`;
-  document.getElementById('listDone').innerHTML = doneItems.map(makeCard).join('');
-  document.getElementById('listWait').innerHTML = waitItems.map(makeCard).join('');
-
-  const h = window.location.hash.slice(1);
-  if (h && ITEMS.find(x => x.sysno === h)) showDetail(h);
+/* ===== 메인 화면들 ===== */
+function viewHome(){
+  return `<div class="wrap">
+    <div class="intro">
+      <div class="intro-emoji">🏡</div>
+      <div class="intro-title">검단 이편한세상 웰카운티<br>하자 보수 현황</div>
+      <div class="intro-text">
+        입주 전 발견한 하자들을<br>
+        건설사가 어떻게 고쳤는지<br>
+        <b>보수 전 · 후 사진</b>으로 확인하세요.
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stats-title">전체 진행 상황</div>
+      <div class="stats-row">
+        <div class="stat total"><div class="stat-num">${STATS.total}</div><div class="stat-label">전체<br>하자</div></div>
+        <div class="stat done"><div class="stat-num">${STATS.photo_verified}</div><div class="stat-label">사진으로<br>확인됨</div></div>
+        <div class="stat wait"><div class="stat-num">${STATS.no_after}</div><div class="stat-label">사진<br>준비중</div></div>
+      </div>
+      <div class="compare">
+        <div class="cmp sys"><div class="cmp-num">${STATS.site_completed}</div><div class="cmp-label">건설사<br>완료 처리</div></div>
+        <div class="cmp-arrow">›</div>
+        <div class="cmp photo"><div class="cmp-num">${STATS.photo_verified}</div><div class="cmp-label">사진으로<br>확인 가능</div></div>
+      </div>
+      <div class="note">건설사 시스템에는 <b>${STATS.site_completed}곳</b>이 '완료'로 표시돼 있어요.
+        그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.</div>
+    </div>
+    <div class="hint">왼쪽 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
+    <div class="foot">
+      <b>점검일</b> 2026년 5월 9일<br>
+      <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
+      사진을 누르면 크게 볼 수 있어요
+    </div>
+  </div>`;
 }
 
-init();
+function makeCard(it){
+  const repaired=it.hasAfter;
+  const badge = repaired ? `<span class="badge done">✅ 보수 완료</span>` : `<span class="badge wait">🔧 사진 준비중</span>`;
+  let photos='';
+  if(repaired && it.before.length && it.after.length){
+    photos=`<div class="card-photos">
+      <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">전</span></div>
+      <div class="card-photo after"><img loading="lazy" src="${THUMB(it.after[0])}" alt=""><span class="ba-label">후</span></div></div>`;
+  } else if(it.before.length){
+    photos=`<div class="card-photos single"><div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">현재</span></div></div>`;
+  }
+  const date = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';
+  return `<div class="card" onclick="go('item','${it.sysno}')">
+    ${photos}
+    <div class="card-body">
+      ${badge}
+      <div class="card-title">${esc(it.content)}</div>
+      <div class="card-ident">
+        <span class="chip">${esc(it.part)}</span>
+        <span class="chip">${esc(it.dtype)}</span>
+        <span class="chip num">DL ${it.sysno}</span>
+      </div>
+      <div class="card-date">${date}</div>
+    </div></div>`;
+}
+
+function viewLoc(i){
+  const L=LOCATIONS[i];
+  return `<div class="page-head">
+      <div class="ph-loc">${esc(L.emoji)} ${esc(L.loc)}</div>
+      <div class="ph-sub">전체 ${L.items.length}곳 · <b class="done">보수 완료 ${L.done}</b> · <b class="wait">사진 준비중 ${L.wait}</b></div>
+    </div>
+    <div class="list">${L.items.map(makeCard).join('')}</div>`;
+}
+
+function viewItem(sysno){
+  const it=ITEMS.find(x=>x.sysno===sysno);
+  if(!it) return viewHome();
+  const repaired=it.hasAfter;
+  const status = repaired
+    ? `<div class="detail-status done"><div class="ds-icon">✅</div><div><div class="ds-title">보수 완료</div><div class="ds-sub">${fmtDate(it.repairDate)}에 고쳐졌어요</div></div></div>`
+    : `<div class="detail-status wait"><div class="ds-icon">🔧</div><div><div class="ds-title">사진 준비 중</div><div class="ds-sub">보수 진행 중이거나 사진 등록 전이에요</div></div></div>`;
+  let photos='';
+  if(repaired){
+    photos=`<div class="photos">
+      <div class="pblock before"><div class="pblock-title"><span class="tag">전</span>보수 전 모습</div>
+        <div class="pgrid">${it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 전">`).join('')}</div></div>
+      <div class="arrow">⬇</div>
+      <div class="pblock after"><div class="pblock-title"><span class="tag">후</span>보수 후 모습</div>
+        <div class="pgrid">${it.after.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 후">`).join('')}</div></div>
+    </div>`;
+  } else {
+    photos=`<div class="photos">
+      <div class="pblock before"><div class="pblock-title"><span class="tag">현재</span>현재 모습</div>
+        <div class="pgrid">${it.before.length? it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}</div></div>
+    </div>
+    <div class="wait-notice"><div class="wn-in"><b>아직 사진이 준비 중이에요</b>이 부분은 보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않았어요.</div></div>`;
+  }
+  return `<div class="detail-hero"><div class="dh-wrap">
+      <div class="loc">${esc(it.emoji)} ${esc(it.loc)}</div>
+      <div class="desc">${esc(it.content)}</div>
+    </div></div>
+    ${status}
+    <div class="ident-box">
+      <div class="ib-title">식별 정보</div>
+      <div class="ident-chips">
+        <span class="chip">${esc(it.loc)}</span>
+        <span class="chip">${esc(it.part)}</span>
+        <span class="chip">${esc(it.dtype)}</span>
+        <span class="chip num">DL번호 ${it.sysno}</span>
+      </div>
+    </div>
+    <a class="dl-link" href="${DLBASE}${it.sysno}" target="_blank" rel="noopener">🔧 DL 보수시스템에서 열기 · 수정 →</a>
+    <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>
+    ${photos}
+    <div class="foot">사진을 누르면 크게 볼 수 있어요</div>`;
+}
+
+/* ===== 라우팅 ===== */
+function setActive(view, arg){
+  document.querySelectorAll('.nav-loc.active, .nav-item.active').forEach(e=>e.classList.remove('active'));
+  document.getElementById('navHome').classList.toggle('active', view==='home');
+  if(view==='loc'){
+    const g=document.getElementById('g'+arg);
+    if(g){ openGroup(arg); g.querySelector('.nav-loc').classList.add('active'); }
+  }
+  if(view==='item'){
+    const it=ITEMS.find(x=>x.sysno===arg);
+    if(it){ const i=locIdx(it.loc); openGroup(i);
+      document.getElementById('g'+i).querySelector('.nav-loc').classList.add('active');
+      const ni=document.getElementById('ni'+arg); if(ni) ni.classList.add('active');
+    }
+  }
+}
+function openGroup(i){
+  LOCATIONS.forEach((_,j)=>document.getElementById('g'+j).classList.toggle('open', j===i));
+}
+function render(){
+  const h=location.hash.slice(1);
+  const main=document.getElementById('main');
+  let view='home', arg=null;
+  if(h.startsWith('loc/')){ view='loc'; arg=parseInt(h.slice(4),10); }
+  else if(h.startsWith('item/')){ view='item'; arg=h.slice(5); }
+
+  if(view==='loc' && LOCATIONS[arg]) main.innerHTML=viewLoc(arg);
+  else if(view==='item' && ITEMS.find(x=>x.sysno===arg)) main.innerHTML=viewItem(arg);
+  else { view='home'; main.innerHTML=viewHome(); }
+
+  setActive(view, arg);
+  window.scrollTo(0,0);
+}
+function go(view, arg){
+  closeDrawer();
+  if(view==='home') location.hash='';
+  else if(view==='loc') location.hash='loc/'+arg;
+  else if(view==='item') location.hash='item/'+arg;
+  if((view==='home' && !location.hash) ) render();   // hash already empty → force render
+}
+window.addEventListener('hashchange', render);
+
+/* ===== 드로어(모바일) ===== */
+function openDrawer(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('scrim').classList.add('show'); }
+function closeDrawer(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('scrim').classList.remove('show'); }
+document.getElementById('btnMenu').addEventListener('click', openDrawer);
+document.getElementById('scrim').addEventListener('click', closeDrawer);
+document.getElementById('btnHome').addEventListener('click', ()=>go('home'));
+
+/* ===== 모달 ===== */
+function openModal(src){ document.getElementById('modalImg').src=src; document.getElementById('modal').classList.add('active'); }
+document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('modal').classList.remove('active'));
+document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') document.getElementById('modal').classList.remove('active'); });
+
+buildNav();
+render();
 </script>
 </body>
 </html>
