@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="theme-color" content="#0F766E">
 <title>검단 이편한세상 웰카운티 하자 보수 현황</title>
 <meta property="og:title" content="검단 이편한세상 웰카운티 하자 보수 현황">
@@ -52,8 +52,10 @@ button{font-family:inherit;cursor:pointer;}
 .layout{display:flex;align-items:flex-start;}
 .sidebar{
   flex:0 0 var(--side); width:var(--side);
-  position:sticky; top:var(--hdr); height:calc(100vh - var(--hdr));
-  overflow-y:auto; background:var(--card); border-right:1px solid var(--line);
+  position:sticky; top:var(--hdr);
+  height:calc(100vh - var(--hdr)); height:calc(100dvh - var(--hdr));
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  background:var(--card); border-right:1px solid var(--line);
   padding:14px 12px 40px;
 }
 .scrim{display:none;}
@@ -156,6 +158,29 @@ button{font-family:inherit;cursor:pointer;}
 .chip{font-size:14px;font-weight:700;color:var(--soft);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 10px;}
 .chip.num{color:var(--teal);background:var(--tealBg);border-color:var(--tealLine);}
 .card-date{font-size:var(--f-xs);color:var(--muted);margin-top:10px;font-weight:600;}
+.card-badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.verdict{display:inline-flex;align-items:center;gap:5px;font-size:var(--f-xs);font-weight:800;padding:5px 12px;border-radius:999px;border:1.5px solid;}
+.verdict.ok{background:var(--doneBg);color:var(--done);border-color:var(--doneLine);}
+.verdict.bad{background:#FCEAE7;color:var(--red);border-color:#F3B4AC;}
+.verdict.unk{background:#F0F3F2;color:#55655F;border-color:#D8DFDC;}
+.verdict.none{background:#F0F3F2;color:#7E8C87;border-color:#E4EAE7;}
+/* AI 판단 박스 (상세) */
+.ai-box{max-width:760px;margin:16px auto 0;width:calc(100% - 36px);border-radius:16px;padding:18px 20px;border:2px solid;}
+.ai-box.ok{background:var(--doneBg);border-color:var(--doneLine);}
+.ai-box.bad{background:#FCEAE7;border-color:#F3B4AC;}
+.ai-box.unk{background:#F4F6F5;border-color:var(--line);}
+.ai-box.none{background:#F4F6F5;border-color:var(--line);}
+.ai-h{font-size:var(--f-xs);font-weight:800;color:var(--soft);display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ai-tag{font-size:13px;font-weight:700;background:rgba(0,0,0,.06);color:var(--soft);border-radius:6px;padding:2px 9px;}
+.ai-verdict{font-size:var(--f-md);font-weight:800;}
+.ai-box.ok .ai-verdict{color:var(--done);} .ai-box.bad .ai-verdict{color:var(--red);}
+.ai-box.unk .ai-verdict{color:#46554F;} .ai-box.none .ai-verdict{color:#46554F;}
+.ai-reason{font-size:var(--f-sm);color:var(--text);margin-top:6px;line-height:1.55;}
+.ai-disc{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5;}
+/* AI 요약 (홈) */
+.ai-summary{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:var(--f-xs);color:var(--soft);line-height:1.8;}
+.ai-summary .s{font-weight:800;}
+.ai-summary .s.ok{color:var(--done);} .ai-summary .s.bad{color:var(--red);} .ai-summary .s.unk{color:#55655F;}
 
 /* ===== 상세 ===== */
 .detail-hero{background:linear-gradient(135deg,var(--teal),var(--tealD));color:#fff;padding:24px 20px 28px;}
@@ -179,18 +204,31 @@ button{font-family:inherit;cursor:pointer;}
 .dl-link:active{background:var(--tealD);}
 .dl-hint{max-width:760px;margin:8px auto 0;padding:0 18px;font-size:14px;color:var(--muted);text-align:center;}
 
-.photos{max-width:760px;margin:0 auto;padding:24px 18px 0;}
-.pblock{margin-bottom:24px;}
-.pblock-title{font-size:var(--f-md);font-weight:800;display:flex;align-items:center;gap:10px;margin-bottom:12px;letter-spacing:-.02em;}
-.pblock-title .tag{padding:5px 14px;border-radius:10px;font-size:var(--f-sm);color:#fff;font-weight:800;}
-.pblock.before .tag{background:var(--red);} .pblock.after .tag{background:var(--done);}
-.pgrid{display:flex;flex-direction:column;gap:12px;}
-.pgrid img{width:100%;height:auto;border-radius:16px;box-shadow:var(--sh-sm);background:#E8EEEC;cursor:zoom-in;}
-.arrow{text-align:center;font-size:38px;color:var(--teal);margin:6px 0 18px;}
-.wait-notice{max-width:760px;margin:0 auto;padding:20px;}
-.wait-notice .wn-in{background:var(--waitBg);border:2px solid var(--waitLine);border-radius:16px;padding:18px 20px;font-size:var(--f-sm);line-height:1.6;color:#7A4408;}
-.wait-notice b{display:block;font-weight:800;margin-bottom:6px;font-size:var(--f);}
-.no-photo{padding:46px 20px;text-align:center;color:var(--muted);background:var(--bg);border-radius:16px;}
+/* 건설사 처리 상태 (상단) */
+.builder-status{max-width:760px;margin:-16px auto 0;width:calc(100% - 36px);background:var(--card);
+  border-radius:18px;padding:18px 20px;box-shadow:var(--sh-md);border-left:8px solid var(--line);}
+.builder-status.done{border-left-color:var(--done);}
+.builder-status.wait{border-left-color:var(--wait);}
+.bs-label{font-size:var(--f-xs);font-weight:700;color:var(--muted);}
+.bs-main{display:flex;align-items:center;gap:10px;margin-top:4px;}
+.bs-ico{font-size:26px;line-height:1;}
+.bs-title{font-size:var(--f-lg);font-weight:800;letter-spacing:-.02em;}
+.builder-status.done .bs-title{color:var(--done);} .builder-status.wait .bs-title{color:var(--wait);}
+.bs-sub{font-size:var(--f-xs);color:var(--muted);margin-top:4px;font-weight:600;}
+
+/* 사진 좌·우 비교 */
+.section-label{max-width:760px;margin:22px auto 0;padding:0 18px;font-size:var(--f-sm);font-weight:800;color:var(--text);}
+.cmp-photos{max-width:760px;margin:10px auto 0;padding:0 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.cmp-col{min-width:0;}
+.cmp-col-h{font-size:var(--f-sm);font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-bottom:10px;color:#fff;border-radius:10px;padding:9px 6px;}
+.cmp-col.before .cmp-col-h{background:var(--red);}
+.cmp-col.after .cmp-col-h{background:var(--done);}
+.cmp-imgs{display:flex;flex-direction:column;gap:10px;}
+.cmp-imgs img{width:100%;height:auto;border-radius:12px;box-shadow:var(--sh-sm);background:#E8EEEC;cursor:zoom-in;display:block;}
+.cmp-single{max-width:760px;margin:10px auto 0;padding:0 18px;}
+.cmp-single .cmp-col-h{background:var(--wait);}
+.no-photo{padding:40px 20px;text-align:center;color:var(--muted);background:var(--bg);border-radius:16px;}
 
 /* ===== 모달 ===== */
 .modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:16px;}
@@ -204,9 +242,10 @@ button{font-family:inherit;cursor:pointer;}
 /* ===== 모바일 ===== */
 @media (max-width:919px){
   .sidebar{
-    position:fixed;top:0;left:0;height:100vh;width:88%;max-width:360px;z-index:130;
+    position:fixed;top:0;left:0;height:100vh;height:100dvh;width:88%;max-width:360px;z-index:130;
     transform:translateX(-100%);transition:transform .25s ease;
-    padding-top:calc(14px + env(safe-area-inset-top));box-shadow:var(--sh-lg);
+    padding-top:calc(14px + env(safe-area-inset-top));
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));box-shadow:var(--sh-lg);
   }
   .sidebar.open{transform:translateX(0);}
   .scrim{display:block;position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.45);opacity:0;visibility:hidden;transition:opacity .25s;}
@@ -240,11 +279,26 @@ button{font-family:inherit;cursor:pointer;}
 </div>
 
 <script src="data.js"></script>
+<script src="verdicts.js"></script>
 <script>
 const THUMB = p => p.replace('images/', 'thumbs/');
 const DLBASE = 'https://mobileas.dlenc.co.kr/dch7001/';
 function fmtDate(d){ if(!d) return ''; const [y,m,day]=d.split('-'); return `${y}년 ${+m}월 ${+day}일`; }
 function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* AI 보수 판단 */
+const VERDICT_META = {
+  confirmed:    {emoji:'✅', label:'보수 확인',          cls:'ok',   desc:'보수 전·후 사진에서 결함이 해소된 것으로 보여요.'},
+  suspect:      {emoji:'❗', label:'미보수 의심',        cls:'bad',  desc:'보수 후 사진에도 문제가 남아 있는 것으로 보여요. 직접 확인이 필요해요.'},
+  unverifiable: {emoji:'❓', label:'사진으로 확인 어려움', cls:'unk',  desc:'기능 점검이 필요하거나, 사진만으로는 보수 여부를 판단하기 어려워요.'},
+  no_after:     {emoji:'⬜', label:'보수 후 사진 없음',    cls:'none', desc:'작업 후 사진이 등록되지 않아 보수 여부를 확인할 수 없어요.'},
+};
+function verdictOf(sysno){
+  const raw = (typeof VERDICTS!=='undefined' && VERDICTS[sysno]) || null;
+  const key = (raw && raw.v) || 'no_after';
+  const meta = VERDICT_META[key] || VERDICT_META.no_after;
+  return { key, meta, reason:(raw && raw.r) || meta.desc };
+}
 
 /* 공간별 그룹 (건수 많은 순). 각 공간 내부는 준비중 먼저, 그다음 등록순 */
 const LOC_MAP={};
@@ -292,6 +346,8 @@ function buildNav(){
 
 /* ===== 메인 화면들 ===== */
 function viewHome(){
+  const vc={confirmed:0,suspect:0,unverifiable:0,no_after:0};
+  ITEMS.forEach(it=>vc[verdictOf(it.sysno).key]++);
   return `<div class="wrap">
     <div class="intro">
       <div class="intro-emoji">🏡</div>
@@ -316,6 +372,8 @@ function viewHome(){
       </div>
       <div class="note">건설사 시스템에는 <b>${STATS.site_completed}곳</b>이 '완료'로 표시돼 있어요.
         그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.</div>
+      <div class="ai-summary">🤖 <b>AI 사진 판단</b> (보수 전·후 자동 비교)<br>
+        보수 확인 <span class="s ok">${vc.confirmed}</span> · 확인 어려움 <span class="s unk">${vc.unverifiable}</span> · 미보수 의심 <span class="s bad">${vc.suspect}</span> · 사진 없음 ${vc.no_after}</div>
     </div>
     <div class="hint">왼쪽 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
     <div class="foot">
@@ -328,6 +386,7 @@ function viewHome(){
 
 function makeCard(it){
   const repaired=it.hasAfter;
+  const V=verdictOf(it.sysno);
   const badge = repaired ? `<span class="badge done">✅ 보수 완료</span>` : `<span class="badge wait">🔧 사진 준비중</span>`;
   let photos='';
   if(repaired && it.before.length && it.after.length){
@@ -341,7 +400,7 @@ function makeCard(it){
   return `<div class="card" onclick="go('item','${it.sysno}')">
     ${photos}
     <div class="card-body">
-      ${badge}
+      <div class="card-badges">${badge}<span class="verdict ${V.meta.cls}">🤖 ${V.meta.label}</span></div>
       <div class="card-title">${esc(it.content)}</div>
       <div class="card-ident">
         <span class="chip">${esc(it.part)}</span>
@@ -365,31 +424,43 @@ function viewItem(sysno){
   const it=ITEMS.find(x=>x.sysno===sysno);
   if(!it) return viewHome();
   const repaired=it.hasAfter;
-  const status = repaired
-    ? `<div class="detail-status done"><div class="ds-icon">✅</div><div><div class="ds-title">보수 완료</div><div class="ds-sub">${fmtDate(it.repairDate)}에 고쳐졌어요</div></div></div>`
-    : `<div class="detail-status wait"><div class="ds-icon">🔧</div><div><div class="ds-title">사진 준비 중</div><div class="ds-sub">보수 진행 중이거나 사진 등록 전이에요</div></div></div>`;
+  const V=verdictOf(sysno);
+
+  // 1) 건설사 처리 상태 (상단)
+  const builder = repaired
+    ? `<div class="builder-status done"><div class="bs-label">건설사(DL이앤씨) 처리 상태</div>
+        <div class="bs-main"><span class="bs-ico">✅</span><span class="bs-title">보수 완료</span></div>
+        <div class="bs-sub">${fmtDate(it.repairDate)} 등록</div></div>`
+    : `<div class="builder-status wait"><div class="bs-label">건설사(DL이앤씨) 처리 상태</div>
+        <div class="bs-main"><span class="bs-ico">🔧</span><span class="bs-title">사진 준비중</span></div>
+        <div class="bs-sub">보수 진행 중이거나 작업 후 사진이 등록되지 않았어요</div></div>`;
+
+  // 2) 사진 좌·우 비교
   let photos='';
   if(repaired){
-    photos=`<div class="photos">
-      <div class="pblock before"><div class="pblock-title"><span class="tag">전</span>보수 전 모습</div>
-        <div class="pgrid">${it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 전">`).join('')}</div></div>
-      <div class="arrow">⬇</div>
-      <div class="pblock after"><div class="pblock-title"><span class="tag">후</span>보수 후 모습</div>
-        <div class="pgrid">${it.after.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 후">`).join('')}</div></div>
-    </div>`;
+    photos=`<div class="section-label">📷 보수 전 · 후 사진 (좌우 비교)</div>
+      <div class="cmp-photos">
+        <div class="cmp-col before"><div class="cmp-col-h">◀ 보수 전</div>
+          <div class="cmp-imgs">${it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 전">`).join('')}</div></div>
+        <div class="cmp-col after"><div class="cmp-col-h">보수 후 ▶</div>
+          <div class="cmp-imgs">${it.after.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 후">`).join('')}</div></div>
+      </div>`;
   } else {
-    photos=`<div class="photos">
-      <div class="pblock before"><div class="pblock-title"><span class="tag">현재</span>현재 모습</div>
-        <div class="pgrid">${it.before.length? it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}</div></div>
-    </div>
-    <div class="wait-notice"><div class="wn-in"><b>아직 사진이 준비 중이에요</b>이 부분은 보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않았어요.</div></div>`;
+    photos=`<div class="section-label">📷 현재 사진</div>
+      <div class="cmp-single"><div class="cmp-col"><div class="cmp-col-h">현재 모습</div>
+        <div class="cmp-imgs">${it.before.length? it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}</div></div></div>`;
   }
-  return `<div class="detail-hero"><div class="dh-wrap">
-      <div class="loc">${esc(it.emoji)} ${esc(it.loc)}</div>
-      <div class="desc">${esc(it.content)}</div>
-    </div></div>
-    ${status}
-    <div class="ident-box">
+
+  // 3) AI 보수 판단 (아래)
+  const ai=`<div class="ai-box ${V.meta.cls}">
+      <div class="ai-h">🤖 AI 보수 판단 <span class="ai-tag">참고용</span></div>
+      <div class="ai-verdict">${V.meta.emoji} ${V.meta.label}</div>
+      <div class="ai-reason">${esc(V.reason)}</div>
+      <div class="ai-disc">보수 전·후 사진을 AI가 자동 비교한 추정이에요. 최종 확인은 직접 점검을 권장해요.</div>
+    </div>`;
+
+  // 4) 식별 정보 + DL 시스템 (맨 아래)
+  const identDL=`<div class="ident-box">
       <div class="ib-title">식별 정보</div>
       <div class="ident-chips">
         <span class="chip">${esc(it.loc)}</span>
@@ -399,9 +470,17 @@ function viewItem(sysno){
       </div>
     </div>
     <a class="dl-link" href="${DLBASE}${it.sysno}" target="_blank" rel="noopener">🔧 DL 보수시스템에서 열기 · 수정 →</a>
-    <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>
+    <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>`;
+
+  return `<div class="detail-hero"><div class="dh-wrap">
+      <div class="loc">${esc(it.emoji)} ${esc(it.loc)}</div>
+      <div class="desc">${esc(it.content)}</div>
+    </div></div>
+    ${builder}
     ${photos}
-    <div class="foot">사진을 누르면 크게 볼 수 있어요</div>`;
+    ${ai}
+    ${identDL}
+    <div class="foot">사진을 누르면 원본 화질로 크게 볼 수 있어요</div>`;
 }
 
 /* ===== 라우팅 ===== */
