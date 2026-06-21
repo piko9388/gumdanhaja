@@ -158,6 +158,7 @@ body {
 .card:active { transform: scale(.99); box-shadow: var(--shadow-md); }
 .card-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
 .card-photo { aspect-ratio: 4/3; background: #E8EEEC center/cover no-repeat; position: relative; }
+.card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-photo .ba-label {
   position: absolute; top: 8px; left: 8px;
   padding: 4px 12px; border-radius: 8px;
@@ -327,6 +328,8 @@ body {
 <script src="data.js"></script>
 <script>
 const GRADE_KR = { C: "중요", J: "보통", N: "간단" };
+// 카드/상세 미리보기는 가벼운 썸네일, 확대(모달)는 원본을 사용
+const THUMB = p => p.replace('images/', 'thumbs/');
 
 function fmtDate(d) {
   if (!d) return '';
@@ -355,14 +358,14 @@ function showDetail(sysno) {
         <div class="photo-block before">
           <div class="photo-block-title"><span class="tag">전</span><span class="label">보수 전 모습</span></div>
           <div class="photo-grid">
-            ${it.before.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="보수 전">`).join('')}
+            ${it.before.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="보수 전">`).join('')}
           </div>
         </div>
         <div class="arrow-divider">⬇</div>
         <div class="photo-block after">
           <div class="photo-block-title"><span class="tag">후</span><span class="label">보수 후 모습</span></div>
           <div class="photo-grid">
-            ${it.after.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="보수 후">`).join('')}
+            ${it.after.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="보수 후">`).join('')}
           </div>
         </div>
       </div>`;
@@ -372,7 +375,7 @@ function showDetail(sysno) {
         <div class="photo-block before">
           <div class="photo-block-title"><span class="tag">현재</span><span class="label">현재 모습</span></div>
           <div class="photo-grid">
-            ${it.before.length ? it.before.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}
+            ${it.before.length ? it.before.map(src => `<img src="${THUMB(src)}" loading="lazy" onclick="openModal('${src}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}
           </div>
         </div>
       </div>
@@ -427,13 +430,13 @@ function makeCard(it) {
   if (repaired && it.before.length && it.after.length) {
     photosHtml = `
       <div class="card-photos">
-        <div class="card-photo before" style="background-image:url('${it.before[0]}')"><span class="ba-label">전</span></div>
-        <div class="card-photo after" style="background-image:url('${it.after[0]}')"><span class="ba-label">후</span></div>
+        <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">전</span></div>
+        <div class="card-photo after"><img loading="lazy" src="${THUMB(it.after[0])}" alt=""><span class="ba-label">후</span></div>
       </div>`;
   } else if (it.before.length) {
     photosHtml = `
       <div class="card-photos single">
-        <div class="card-photo before" style="background-image:url('${it.before[0]}')"><span class="ba-label">현재</span></div>
+        <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">현재</span></div>
       </div>`;
   }
   const dateText = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';

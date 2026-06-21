@@ -32,10 +32,11 @@ GitHub Pages: **https://piko9388.github.io/gumdanhaja/**
 |------|------|
 | `index.html` | 메인 페이지 (디자인 + 동작 전부 포함) |
 | `data.js` | 하자 데이터 79건 (`ITEMS`, `STATS`) |
-| `images/` | 보수 전/후 사진 — `images/{등록번호}/before_*.jpg`, `after_*.jpg` |
+| `images/` | **원본 고화질** 보수 전/후 사진 218장 — `images/{등록번호}/before_*.jpg`, `after_*.jpg` (탭하면 원본 확대) |
+| `thumbs/` | 화면 표시용 **썸네일**(긴 변 768px) — 목록·상세에서 빠르게 로딩 |
 | `.nojekyll` | GitHub Pages가 폴더를 그대로 서빙하도록 하는 표시 파일 |
 
-> ⚠️ `images/` 폴더(사진 218장)는 별도로 추가해야 사진이 보입니다. (저장소에 아직 없으면 사진이 깨져 보입니다.)
+> 목록·상세 화면은 가벼운 `thumbs/`(약 10MB)로 빠르게 보여주고, 사진을 누르면 `images/`의 **원본 화질**(2~5년 하자보수 분쟁 대비 증거용)로 확대됩니다.
 
 ## 배포 방법 (GitHub Pages)
 
