@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0F766E">
+<title>검단 신혼집 하자 보수 결과</title>
+<meta property="og:title" content="검단 신혼집 하자 보수 결과">
+<meta property="og:description" content="우리 신혼집 하자 보수 전/후 사진으로 확인하세요">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F7F6;
+  --card: #FFFFFF;
+  --text: #1A2B28;
+  --text-soft: #4A5C58;
+  --text-muted: #8A9794;
+  --border: #E2E8E6;
+  --teal: #0F766E;
+  --teal-dark: #115E56;
+  --teal-light: #CCFBF1;
+  --teal-bg: #F0FDFA;
+  --done: #059669;
+  --done-bg: #ECFDF5;
+  --done-border: #6EE7B7;
+  --wait: #D97706;
+  --wait-bg: #FFFBEB;
+  --wait-border: #FCD34D;
+  --critical: #DC2626;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 14px rgba(0,0,0,.07);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+  --fs-xs: 17px;
+  --fs-sm: 19px;
+  --fs-base: 21px;
+  --fs-md: 24px;
+  --fs-lg: 28px;
+  --fs-xl: 34px;
+  --fs-xxl: 46px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+body {
+  font-family: 'Gowun Dodum', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  background: var(--bg); color: var(--text);
+  line-height: 1.6; font-size: var(--fs-base);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.app-header {
+  position: sticky; top: 0; z-index: 50;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  color: #fff; padding: 20px;
+  padding-top: max(20px, env(safe-area-inset-top));
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow-md);
+}
+.btn-back {
+  width: 50px; height: 50px;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.18);
+  border: 0; border-radius: 14px;
+  color: #fff; font-size: 30px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+}
+.btn-back:active { background: rgba(255,255,255,.3); }
+.app-title { font-size: var(--fs-md); font-weight: 700; flex: 1; letter-spacing: -.02em; }
+.app-sub { font-size: var(--fs-xs); color: rgba(255,255,255,.85); margin-top: 3px; }
+
+.intro {
+  margin: 18px 18px 0; background: var(--card);
+  border-radius: 22px; padding: 28px 26px;
+  box-shadow: var(--shadow-md); text-align: center;
+}
+.intro-emoji { font-size: 52px; margin-bottom: 12px; }
+.intro-title {
+  font-size: var(--fs-lg); font-weight: 800;
+  color: var(--teal-dark); letter-spacing: -.03em;
+  line-height: 1.35; margin-bottom: 14px;
+}
+.intro-text { font-size: var(--fs-base); color: var(--text-soft); line-height: 1.65; }
+.intro-text b { color: var(--done); font-weight: 800; }
+
+/* 통계 3분할 */
+.stats {
+  margin: 18px 18px 0;
+  background: var(--card); border-radius: 20px;
+  padding: 24px 22px; box-shadow: var(--shadow-md);
+}
+.stats-title {
+  font-size: var(--fs-sm); font-weight: 700;
+  color: var(--text-soft); margin-bottom: 16px;
+  text-align: center;
+}
+.stats-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; text-align: center;
+}
+.stat {
+  padding: 16px 8px; border-radius: 14px;
+  border: 2px solid;
+}
+.stat.total { background: var(--teal-bg); border-color: var(--teal-light); }
+.stat.done { background: var(--done-bg); border-color: var(--done-border); }
+.stat.wait { background: var(--wait-bg); border-color: var(--wait-border); }
+.stat-num { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.stat.total .stat-num { color: var(--teal); }
+.stat.done .stat-num { color: var(--done); }
+.stat.wait .stat-num { color: var(--wait); }
+.stat-label { font-size: var(--fs-xs); font-weight: 700; color: var(--text-soft); margin-top: 6px; line-height: 1.3; }
+
+.stats-compare {
+  display: flex; align-items: stretch; gap: 8px; margin-top: 16px;
+}
+.stats-compare .cmp {
+  flex: 1; border: 2px solid var(--border); border-radius: 14px;
+  padding: 14px 8px; text-align: center; background: var(--bg);
+}
+.stats-compare .cmp.sys { border-color: var(--teal-light); background: var(--teal-bg); }
+.stats-compare .cmp.photo { border-color: var(--done-border); background: var(--done-bg); }
+.cmp-num { font-size: var(--fs-lg); font-weight: 800; line-height: 1; letter-spacing: -.03em; }
+.cmp.sys .cmp-num { color: var(--teal); }
+.cmp.photo .cmp-num { color: var(--done); }
+.cmp-label { font-size: var(--fs-xs); font-weight: 700; color: var(--text-soft); margin-top: 6px; line-height: 1.35; }
+.cmp-arrow { display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--text-muted); font-weight: 700; }
+
+.stats-note {
+  margin-top: 14px; padding: 14px 16px;
+  background: var(--bg); border-radius: 12px;
+  font-size: var(--fs-xs); color: var(--text-soft);
+  line-height: 1.6;
+}
+.stats-note b { color: var(--done); font-weight: 800; }
+
+.section-head {
+  margin: 30px 20px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-head .dot { width: 14px; height: 14px; border-radius: 50%; }
+.section-head.done .dot { background: var(--done); }
+.section-head.wait .dot { background: var(--wait); }
+.section-head h2 { font-size: var(--fs-md); font-weight: 800; color: var(--text); letter-spacing: -.02em; }
+.section-head .count { margin-left: auto; font-size: var(--fs-sm); font-weight: 700; color: var(--text-muted); }
+.section-desc {
+  margin: 0 20px 14px; font-size: var(--fs-xs);
+  color: var(--text-muted); line-height: 1.5;
+}
+
+.list { padding: 0 18px 40px; }
+.card {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 20px; margin-bottom: 14px;
+  overflow: hidden; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.card:active { transform: scale(.99); box-shadow: var(--shadow-md); }
+.card-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); }
+.card-photo { aspect-ratio: 4/3; background: #E8EEEC center/cover no-repeat; position: relative; }
+.card-photo .ba-label {
+  position: absolute; top: 8px; left: 8px;
+  padding: 4px 12px; border-radius: 8px;
+  font-size: var(--fs-xs); font-weight: 800; color: #fff;
+}
+.card-photo.before .ba-label { background: rgba(220,38,38,.92); }
+.card-photo.after .ba-label { background: rgba(5,150,105,.92); }
+.card-photos.single { grid-template-columns: 1fr; }
+.card-photos.single .card-photo { aspect-ratio: 16/9; }
+.card-body { padding: 18px 20px; }
+.card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.badge {
+  font-size: var(--fs-xs); font-weight: 800;
+  padding: 5px 12px; border-radius: 999px;
+}
+.badge.done { background: var(--done-bg); color: var(--done); border: 1.5px solid var(--done-border); }
+.badge.wait { background: var(--wait-bg); color: var(--wait); border: 1.5px solid var(--wait-border); }
+.card-loc { font-size: var(--fs-md); font-weight: 800; color: var(--text); letter-spacing: -.02em; display: flex; align-items: center; gap: 8px; }
+.card-desc { font-size: var(--fs-sm); color: var(--text-soft); margin-top: 6px; line-height: 1.5; }
+.card-date { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 10px; font-weight: 600; }
+
+.detail { padding: 0 0 60px; display: none; }
+.detail.active { display: block; }
+.home { display: block; }
+.home.hidden { display: none; }
+.detail-hero {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+  padding: 24px 22px 28px; color: #fff;
+}
+.detail-hero .loc { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -.03em; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.detail-hero .desc { font-size: var(--fs-base); color: rgba(255,255,255,.9); line-height: 1.5; }
+.detail-status {
+  margin: -16px 18px 0; background: var(--card);
+  border-radius: 18px; padding: 20px 22px;
+  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; gap: 14px;
+}
+.detail-status-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0; }
+.detail-status.done .detail-status-icon { background: var(--done-bg); }
+.detail-status.wait .detail-status-icon { background: var(--wait-bg); }
+.detail-status-text { flex: 1; }
+.detail-status-title { font-size: var(--fs-md); font-weight: 800; letter-spacing: -.02em; }
+.detail-status.done .detail-status-title { color: var(--done); }
+.detail-status.wait .detail-status-title { color: var(--wait); }
+.detail-status-sub { font-size: var(--fs-xs); color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+
+.photo-section { padding: 26px 18px 0; }
+.photo-block { margin-bottom: 26px; }
+.photo-block-title { font-size: var(--fs-md); font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; letter-spacing: -.02em; }
+.photo-block-title .tag { padding: 5px 14px; border-radius: 10px; font-size: var(--fs-sm); color: #fff; font-weight: 800; }
+.photo-block.before .tag { background: var(--critical); }
+.photo-block.after .tag { background: var(--done); }
+.photo-block-title .label { color: var(--text); }
+.photo-grid { display: flex; flex-direction: column; gap: 12px; }
+.photo-grid img {
+  width: 100%; height: auto; border-radius: 16px;
+  box-shadow: var(--shadow-sm); background: #E8EEEC;
+  cursor: zoom-in;
+}
+.arrow-divider { text-align: center; font-size: 40px; color: var(--teal); margin: 8px 0 20px; }
+
+.wait-notice {
+  margin: 0 18px; padding: 20px 22px;
+  background: var(--wait-bg); border: 2px solid var(--wait-border);
+  border-radius: 16px; font-size: var(--fs-sm);
+  line-height: 1.6; color: #78350F;
+}
+.wait-notice b { display: block; font-weight: 800; margin-bottom: 6px; font-size: var(--fs-base); }
+.no-photo { padding: 50px 20px; text-align: center; color: var(--text-muted); background: var(--bg); border-radius: 16px; font-size: var(--fs-sm); }
+
+.modal { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.92); align-items: center; justify-content: center; padding: 20px; }
+.modal.active { display: flex; }
+.modal img { max-width: 100%; max-height: 100%; border-radius: 8px; }
+.modal-close { position: absolute; top: max(20px, env(safe-area-inset-top)); right: 20px; width: 50px; height: 50px; background: rgba(255,255,255,.2); border: 0; border-radius: 50%; color: #fff; font-size: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+.loading { text-align: center; padding: 80px 20px; color: var(--text-muted); font-size: var(--fs-base); }
+.spinner { width: 44px; height: 44px; border: 4px solid var(--border); border-top-color: var(--teal); border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.footer { text-align: center; padding: 34px 20px; font-size: var(--fs-xs); color: var(--text-muted); line-height: 1.8; }
+.footer b { color: var(--text-soft); }
+
+@media (min-width: 700px) {
+  .intro, .stats, .section-head, .section-desc, .list, .detail-status, .photo-section, .wait-notice {
+    max-width: 680px; margin-left: auto; margin-right: auto;
+  }
+  .detail-hero { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <button class="btn-back" id="btnBack">←</button>
+  <div style="flex:1; min-width:0;">
+    <div class="app-title" id="appTitle">우리집 하자 보수 결과</div>
+    <div class="app-sub" id="appSub">검단 신혼집 · 0111동 605호</div>
+  </div>
+</header>
+
+<div class="home" id="home">
+  <div class="intro">
+    <div class="intro-emoji">🏡</div>
+    <div class="intro-title">우리 신혼집<br>하자 보수 결과예요</div>
+    <div class="intro-text">
+      입주 전 발견한 문제들을<br>
+      건설사에서 고쳐주었어요.<br>
+      <b>보수 전 / 보수 후 사진</b>으로<br>
+      직접 확인해 보세요!
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stats-title">전체 진행 상황</div>
+    <div class="stats-row">
+      <div class="stat total">
+        <div class="stat-num" id="statTotal">79</div>
+        <div class="stat-label">전체<br>하자</div>
+      </div>
+      <div class="stat done">
+        <div class="stat-num" id="statPhoto">57</div>
+        <div class="stat-label">사진으로<br>확인됨</div>
+      </div>
+      <div class="stat wait">
+        <div class="stat-num" id="statWait">22</div>
+        <div class="stat-label">사진<br>준비중</div>
+      </div>
+    </div>
+    <div class="stats-compare">
+      <div class="cmp sys"><div class="cmp-num" id="cmpSys">77</div><div class="cmp-label">건설사<br>완료 처리</div></div>
+      <div class="cmp-arrow">›</div>
+      <div class="cmp photo"><div class="cmp-num" id="cmpPhoto">57</div><div class="cmp-label">사진으로<br>확인 가능</div></div>
+    </div>
+    <div class="stats-note" id="statsNote"></div>
+  </div>
+
+  <div class="section-head done">
+    <span class="dot"></span>
+    <h2>보수 완료된 곳</h2>
+    <span class="count" id="countDone"></span>
+  </div>
+  <div class="section-desc">건설사가 고친 후 사진을 등록한 곳이에요. 전/후를 비교해 보세요.</div>
+  <div class="list" id="listDone"></div>
+
+  <div class="section-head wait">
+    <span class="dot"></span>
+    <h2>사진 준비 중인 곳</h2>
+    <span class="count" id="countWait"></span>
+  </div>
+  <div class="section-desc">보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않은 곳이에요.</div>
+  <div class="list" id="listWait"></div>
+
+  <div class="footer">
+    <b>점검일</b> 2026년 5월 9일<br>
+    <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
+    사진을 누르면 크게 볼 수 있어요
+  </div>
+</div>
+
+<div class="detail" id="detail"></div>
+
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose">✕</button>
+  <img id="modalImg" src="" alt="확대 사진">
+</div>
+
+<script src="data.js"></script>
+<script>
+const GRADE_KR = { C: "중요", J: "보통", N: "간단" };
+
+function fmtDate(d) {
+  if (!d) return '';
+  const [y, m, day] = d.split('-');
+  return `${y}년 ${parseInt(m)}월 ${parseInt(day)}일`;
+}
+
+function showHome() {
+  document.getElementById('home').classList.remove('hidden');
+  document.getElementById('detail').classList.remove('active');
+  document.getElementById('btnBack').style.display = 'none';
+  document.getElementById('appTitle').textContent = '우리집 하자 보수 결과';
+  document.getElementById('appSub').textContent = '검단 신혼집 · 0111동 605호';
+  window.scrollTo(0, 0);
+}
+
+function showDetail(sysno) {
+  const it = ITEMS.find(x => x.sysno === sysno);
+  if (!it) return;
+  const repaired = it.hasAfter;
+
+  let photoHtml = '';
+  if (repaired) {
+    photoHtml = `
+      <div class="photo-section">
+        <div class="photo-block before">
+          <div class="photo-block-title"><span class="tag">전</span><span class="label">보수 전 모습</span></div>
+          <div class="photo-grid">
+            ${it.before.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="보수 전">`).join('')}
+          </div>
+        </div>
+        <div class="arrow-divider">⬇</div>
+        <div class="photo-block after">
+          <div class="photo-block-title"><span class="tag">후</span><span class="label">보수 후 모습</span></div>
+          <div class="photo-grid">
+            ${it.after.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="보수 후">`).join('')}
+          </div>
+        </div>
+      </div>`;
+  } else {
+    photoHtml = `
+      <div class="photo-section">
+        <div class="photo-block before">
+          <div class="photo-block-title"><span class="tag">현재</span><span class="label">현재 모습</span></div>
+          <div class="photo-grid">
+            ${it.before.length ? it.before.map(src => `<img src="${src}" loading="lazy" onclick="openModal('${src}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}
+          </div>
+        </div>
+      </div>
+      <div class="wait-notice">
+        <b>아직 사진이 준비 중이에요</b>
+        이 부분은 보수가 진행 중이거나 작업 후 사진이 아직 등록되지 않았어요. 등록되면 다시 안내드릴게요.
+      </div>`;
+  }
+
+  const statusHtml = repaired
+    ? `<div class="detail-status done"><div class="detail-status-icon">✅</div><div class="detail-status-text"><div class="detail-status-title">보수 완료</div><div class="detail-status-sub">${fmtDate(it.repairDate)}에 고쳐졌어요</div></div></div>`
+    : `<div class="detail-status wait"><div class="detail-status-icon">🔧</div><div class="detail-status-text"><div class="detail-status-title">사진 준비 중</div><div class="detail-status-sub">보수 진행 중이거나 사진 등록 전이에요</div></div></div>`;
+
+  document.getElementById('detail').innerHTML = `
+    <div class="detail-hero">
+      <div class="loc">${it.emoji} ${it.loc}</div>
+      <div class="desc">${it.content}</div>
+    </div>
+    ${statusHtml}
+    ${photoHtml}
+    <div class="footer">사진을 누르면 크게 볼 수 있어요</div>`;
+
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('detail').classList.add('active');
+  document.getElementById('btnBack').style.display = 'flex';
+  document.getElementById('appTitle').textContent = it.loc;
+  document.getElementById('appSub').textContent = it.part;
+  window.scrollTo(0, 0);
+  window.location.hash = sysno;
+}
+
+document.getElementById('btnBack').addEventListener('click', () => { window.location.hash = ''; showHome(); });
+window.addEventListener('hashchange', () => {
+  const h = window.location.hash.slice(1);
+  if (h && ITEMS.find(x => x.sysno === h)) showDetail(h);
+  else showHome();
+});
+
+function openModal(src) {
+  document.getElementById('modalImg').src = src;
+  document.getElementById('modal').classList.add('active');
+}
+document.getElementById('modalClose').addEventListener('click', () => document.getElementById('modal').classList.remove('active'));
+document.getElementById('modal').addEventListener('click', (e) => { if (e.target.id === 'modal') document.getElementById('modal').classList.remove('active'); });
+
+function makeCard(it) {
+  const repaired = it.hasAfter;
+  const badge = repaired
+    ? `<span class="badge done">✅ 보수 완료</span>`
+    : `<span class="badge wait">🔧 사진 준비중</span>`;
+  let photosHtml = '';
+  if (repaired && it.before.length && it.after.length) {
+    photosHtml = `
+      <div class="card-photos">
+        <div class="card-photo before" style="background-image:url('${it.before[0]}')"><span class="ba-label">전</span></div>
+        <div class="card-photo after" style="background-image:url('${it.after[0]}')"><span class="ba-label">후</span></div>
+      </div>`;
+  } else if (it.before.length) {
+    photosHtml = `
+      <div class="card-photos single">
+        <div class="card-photo before" style="background-image:url('${it.before[0]}')"><span class="ba-label">현재</span></div>
+      </div>`;
+  }
+  const dateText = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';
+  return `
+    <div class="card" onclick="showDetail('${it.sysno}')">
+      ${photosHtml}
+      <div class="card-body">
+        <div class="card-top">${badge}</div>
+        <div class="card-loc">${it.emoji} ${it.loc}</div>
+        <div class="card-desc">${it.content}</div>
+        <div class="card-date">${dateText}</div>
+      </div>
+    </div>`;
+}
+
+function init() {
+  const doneItems = ITEMS.filter(x => x.hasAfter);
+  const waitItems = ITEMS.filter(x => !x.hasAfter);
+
+  document.getElementById('statTotal').textContent = STATS.total;
+  document.getElementById('statPhoto').textContent = STATS.photo_verified;
+  document.getElementById('statWait').textContent = STATS.no_after;
+  document.getElementById('cmpSys').textContent = STATS.site_completed;
+  document.getElementById('cmpPhoto').textContent = STATS.photo_verified;
+  document.getElementById('statsNote').innerHTML =
+    `건설사 시스템에는 <b>${STATS.site_completed}곳</b>이 '완료'로 표시돼 있어요. ` +
+    `그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.`;
+
+  document.getElementById('countDone').textContent = `${doneItems.length}곳`;
+  document.getElementById('countWait').textContent = `${waitItems.length}곳`;
+  document.getElementById('listDone').innerHTML = doneItems.map(makeCard).join('');
+  document.getElementById('listWait').innerHTML = waitItems.map(makeCard).join('');
+
+  const h = window.location.hash.slice(1);
+  if (h && ITEMS.find(x => x.sysno === h)) showDetail(h);
+}
+
+init();
+</script>
+</body>
+</html>
