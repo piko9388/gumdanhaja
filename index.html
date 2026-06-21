@@ -69,6 +69,14 @@ button{font-family:inherit;cursor:pointer;}
   display:flex;align-items:center;gap:10px;
 }
 .nav-home.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.nav-need{width:100%;text-align:left;border:2px solid var(--waitLine);background:var(--waitBg);color:#9A5408;
+  font-weight:800;font-size:var(--f-sm);padding:14px 16px;border-radius:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.nav-need.active{background:var(--wait);color:#fff;border-color:var(--wait);}
+.need-count{margin-left:auto;background:var(--wait);color:#fff;border-radius:999px;font-size:var(--f-xs);font-weight:800;padding:2px 11px;}
+.nav-need.active .need-count{background:#fff;color:var(--wait);}
+.home-cta{display:block;width:100%;margin-top:16px;background:var(--wait);color:#fff;border:0;border-radius:16px;
+  padding:18px;font-size:var(--f-sm);font-weight:800;box-shadow:var(--sh-sm);letter-spacing:-.01em;}
+.home-cta:active{background:#A85C06;}
 .nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);
   padding:4px 8px 8px;letter-spacing:.02em;}
 .nav-group{border-bottom:1px solid var(--line);}
@@ -300,29 +308,50 @@ function verdictOf(sysno){
   return { key, meta, reason:(raw && raw.r) || meta.desc };
 }
 
-/* 공간별 그룹 (건수 많은 순). 각 공간 내부는 준비중 먼저, 그다음 등록순 */
+/* 공간별 그룹. 바닥 난방(분배기)은 전 공간 공통 결함이라 별도 그룹으로 분리해 최상단에.
+   각 그룹 내부는 준비중 먼저, 그다음 등록순 */
+const HEAT='__HEAT__';
+const LOC_META={ [HEAT]:{name:'바닥 난방 (전 공간)', emoji:'🔥'} };
+function groupKeyOf(it){ return it.part==='분배기' ? HEAT : it.loc; }
+function groupOf(it){ const m=LOC_META[groupKeyOf(it)]; return m ? m : {name:it.loc, emoji:it.emoji}; }
 const LOC_MAP={};
-ITEMS.forEach(it=>{ (LOC_MAP[it.loc]=LOC_MAP[it.loc]||[]).push(it); });
-const LOCATIONS=Object.keys(LOC_MAP).map(loc=>{
-  const items=LOC_MAP[loc].slice().sort((a,b)=>{
+ITEMS.forEach(it=>{ const k=groupKeyOf(it); (LOC_MAP[k]=LOC_MAP[k]||[]).push(it); });
+const LOCATIONS=Object.keys(LOC_MAP).map(key=>{
+  const items=LOC_MAP[key].slice().sort((a,b)=>{
     const ad=a.hasAfter?1:0, bd=b.hasAfter?1:0;
     if(ad!==bd) return ad-bd;            // 준비중(0) 먼저
     return a.sysno.localeCompare(b.sysno);
   });
-  return { loc, emoji:items[0].emoji, items,
+  const meta=LOC_META[key];
+  return { loc:key, name: meta?meta.name:key, emoji: meta?meta.emoji:items[0].emoji, items,
            done:items.filter(i=>i.hasAfter).length,
            wait:items.filter(i=>!i.hasAfter).length };
-}).sort((a,b)=>b.items.length-a.items.length);
-const locIdx = loc => LOCATIONS.findIndex(L=>L.loc===loc);
+}).sort((a,b)=>{
+  if(a.loc===HEAT) return -1;            // 바닥 난방 최상단
+  if(b.loc===HEAT) return 1;
+  return b.items.length-a.items.length;  // 그다음 건수 많은 순
+});
+const locIdx = key => LOCATIONS.findIndex(L=>L.loc===key);
+/* 점검이 필요한 곳: 미보수 의심 + 보수 후 사진 없음 (의심 먼저) */
+function needItems(){
+  const ord={suspect:0, no_after:1};
+  return ITEMS.filter(it=>{const k=verdictOf(it.sysno).key; return k==='suspect'||k==='no_after';})
+    .sort((a,b)=>{
+      const ka=verdictOf(a.sysno).key, kb=verdictOf(b.sysno).key;
+      if(ord[ka]!==ord[kb]) return ord[ka]-ord[kb];
+      return a.sysno.localeCompare(b.sysno);
+    });
+}
 
 /* ===== 사이드 메뉴 ===== */
 function buildNav(){
   let h = `<button class="nav-home" id="navHome" onclick="go('home')">🏠 전체 현황</button>
+           <button class="nav-need" id="navNeed" onclick="go('need')">⚠️ 점검이 필요한 곳 <span class="need-count">${needItems().length}</span></button>
            <div class="nav-sect">공간별 보기</div>`;
   LOCATIONS.forEach((L,i)=>{
     h += `<div class="nav-group" id="g${i}">
       <button class="nav-loc" onclick="go('loc',${i})">
-        <span class="nav-loc-name">${esc(L.emoji)} ${esc(L.loc)}</span>
+        <span class="nav-loc-name">${esc(L.emoji)} ${esc(L.name)}</span>
         <span class="nav-loc-meta">
           <span class="dot ${L.wait? 'wait':'done'}"></span>
           <span class="nav-count">${L.items.length}</span>
@@ -374,6 +403,7 @@ function viewHome(){
         그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.</div>
       <div class="ai-summary">🤖 <b>AI 사진 판단</b> (보수 전·후 자동 비교)<br>
         보수 확인 <span class="s ok">${vc.confirmed}</span> · 확인 어려움 <span class="s unk">${vc.unverifiable}</span> · 미보수 의심 <span class="s bad">${vc.suspect}</span> · 사진 없음 ${vc.no_after}</div>
+      <button class="home-cta" onclick="go('need')">⚠️ 점검이 필요한 ${vc.suspect+vc.no_after}곳 모아보기 →</button>
     </div>
     <div class="hint">왼쪽 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
     <div class="foot">
@@ -414,10 +444,22 @@ function makeCard(it){
 function viewLoc(i){
   const L=LOCATIONS[i];
   return `<div class="page-head">
-      <div class="ph-loc">${esc(L.emoji)} ${esc(L.loc)}</div>
+      <div class="ph-loc">${esc(L.emoji)} ${esc(L.name)}</div>
       <div class="ph-sub">전체 ${L.items.length}곳 · <b class="done">보수 완료 ${L.done}</b> · <b class="wait">사진 준비중 ${L.wait}</b></div>
     </div>
     <div class="list">${L.items.map(makeCard).join('')}</div>`;
+}
+
+function viewNeed(){
+  const items=needItems();
+  const ns=items.filter(i=>verdictOf(i.sysno).key==='suspect').length;
+  const nn=items.filter(i=>verdictOf(i.sysno).key==='no_after').length;
+  return `<div class="page-head">
+      <div class="ph-loc">⚠️ 점검이 필요한 곳</div>
+      <div class="ph-sub">아직 보수가 확인되지 않은 ${items.length}곳 · <b class="wait">미보수 의심 ${ns}</b> · 사진 없음 ${nn}</div>
+    </div>
+    <div class="section-desc" style="max-width:760px;margin:0 auto;padding:0 18px 6px;font-size:var(--f-xs);color:var(--muted);">건설사는 '완료'로 표시했지만, 사진으로 보수가 확인되지 않은 항목이에요. 직접 점검하거나 건설사에 재요청이 필요해요.</div>
+    <div class="list">${items.map(makeCard).join('')}</div>`;
 }
 
 function viewItem(sysno){
@@ -472,8 +514,9 @@ function viewItem(sysno){
     <a class="dl-link" href="${DLBASE}${it.sysno}" target="_blank" rel="noopener">🔧 DL 보수시스템에서 열기 · 수정 →</a>
     <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>`;
 
+  const G=groupOf(it);
   return `<div class="detail-hero"><div class="dh-wrap">
-      <div class="loc">${esc(it.emoji)} ${esc(it.loc)}</div>
+      <div class="loc">${esc(G.emoji)} ${esc(G.name)}</div>
       <div class="desc">${esc(it.content)}</div>
     </div></div>
     ${builder}
@@ -487,14 +530,15 @@ function viewItem(sysno){
 function setActive(view, arg){
   document.querySelectorAll('.nav-loc.active, .nav-item.active').forEach(e=>e.classList.remove('active'));
   document.getElementById('navHome').classList.toggle('active', view==='home');
+  document.getElementById('navNeed').classList.toggle('active', view==='need');
   if(view==='loc'){
     const g=document.getElementById('g'+arg);
     if(g){ openGroup(arg); g.querySelector('.nav-loc').classList.add('active'); }
   }
   if(view==='item'){
     const it=ITEMS.find(x=>x.sysno===arg);
-    if(it){ const i=locIdx(it.loc); openGroup(i);
-      document.getElementById('g'+i).querySelector('.nav-loc').classList.add('active');
+    if(it){ const i=locIdx(groupKeyOf(it)); openGroup(i);
+      const g=document.getElementById('g'+i); if(g) g.querySelector('.nav-loc').classList.add('active');
       const ni=document.getElementById('ni'+arg); if(ni) ni.classList.add('active');
     }
   }
@@ -508,9 +552,11 @@ function render(){
   let view='home', arg=null;
   if(h.startsWith('loc/')){ view='loc'; arg=parseInt(h.slice(4),10); }
   else if(h.startsWith('item/')){ view='item'; arg=h.slice(5); }
+  else if(h==='need'){ view='need'; }
 
   if(view==='loc' && LOCATIONS[arg]) main.innerHTML=viewLoc(arg);
   else if(view==='item' && ITEMS.find(x=>x.sysno===arg)) main.innerHTML=viewItem(arg);
+  else if(view==='need') main.innerHTML=viewNeed();
   else { view='home'; main.innerHTML=viewHome(); }
 
   setActive(view, arg);
@@ -519,6 +565,7 @@ function render(){
 function go(view, arg){
   closeDrawer();
   if(view==='home') location.hash='';
+  else if(view==='need') location.hash='need';
   else if(view==='loc') location.hash='loc/'+arg;
   else if(view==='item') location.hash='item/'+arg;
   if((view==='home' && !location.hash) ) render();   // hash already empty → force render
