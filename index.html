@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F4F6F5; --card:#FFFFFF; --text:#16241F; --soft:#46554F; --muted:#7E8C87;
+  --bg:#F4F6F5; --card:#FFFFFF; --text:#16241F; --soft:#46554F; --muted:#5E6D68;
   --line:#E4EAE7; --teal:#0F766E; --tealD:#0B5F58; --tealBg:#ECFBF7; --tealLine:#A7F3D6;
   --done:#067A53; --doneBg:#E9FBF2; --doneLine:#7BE0B4;
   --wait:#C26A05; --waitBg:#FFF6E8; --waitLine:#FBD491;
@@ -32,7 +32,7 @@ button{font-family:inherit;cursor:pointer;}
 
 /* ===== 상단바 ===== */
 .topbar{
-  position:sticky; top:0; z-index:100; height:var(--hdr);
+  position:sticky; top:0; z-index:100; height:calc(var(--hdr) + env(safe-area-inset-top));
   background:linear-gradient(135deg,var(--teal),var(--tealD)); color:#fff;
   display:flex; align-items:center; gap:12px; padding:0 16px;
   padding-top:env(safe-area-inset-top); box-shadow:var(--sh-md);
@@ -54,7 +54,7 @@ button{font-family:inherit;cursor:pointer;}
   flex:0 0 var(--side); width:var(--side);
   position:sticky; top:var(--hdr);
   height:calc(100vh - var(--hdr)); height:calc(100dvh - var(--hdr));
-  overflow-y:auto; -webkit-overflow-scrolling:touch;
+  overflow-y:auto;
   background:var(--card); border-right:1px solid var(--line);
   padding:14px 12px 40px;
 }
@@ -99,7 +99,7 @@ button{font-family:inherit;cursor:pointer;}
 .nav-group.open .nav-items{display:block;}
 .nav-item{
   width:100%;display:flex;align-items:flex-start;gap:10px;
-  background:none;border:0;text-align:left;padding:11px 10px 11px 14px;
+  background:none;border:0;text-align:left;padding:13px 10px 13px 14px;
   border-left:3px solid transparent;border-radius:0 10px 10px 0;
 }
 .nav-item:active{background:var(--bg);}
@@ -195,13 +195,6 @@ button{font-family:inherit;cursor:pointer;}
 .detail-hero .dh-wrap{max-width:760px;margin:0 auto;}
 .detail-hero .loc{font-size:var(--f-xl);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;}
 .detail-hero .desc{font-size:var(--f);color:rgba(255,255,255,.92);line-height:1.5;margin-top:8px;}
-.detail-status{max-width:760px;margin:-16px auto 0;background:var(--card);border-radius:18px;padding:18px 20px;box-shadow:var(--sh-md);display:flex;align-items:center;gap:14px;width:calc(100% - 36px);}
-.ds-icon{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex:0 0 auto;}
-.detail-status.done .ds-icon{background:var(--doneBg);} .detail-status.wait .ds-icon{background:var(--waitBg);}
-.ds-title{font-size:var(--f-md);font-weight:800;}
-.detail-status.done .ds-title{color:var(--done);} .detail-status.wait .ds-title{color:var(--wait);}
-.ds-sub{font-size:var(--f-xs);color:var(--muted);margin-top:2px;font-weight:600;}
-
 .ident-box{max-width:760px;margin:18px auto 0;padding:0 18px;}
 .ident-box .ib-title{font-size:var(--f-xs);font-weight:700;color:var(--muted);margin-bottom:8px;}
 .ident-chips{display:flex;flex-wrap:wrap;gap:8px;}
@@ -239,7 +232,7 @@ button{font-family:inherit;cursor:pointer;}
 .no-photo{padding:40px 20px;text-align:center;color:var(--muted);background:var(--bg);border-radius:16px;}
 
 /* ===== 모달 ===== */
-.modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:16px;}
+.modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom));}
 .modal.active{display:flex;}
 .modal img{max-width:100%;max-height:100%;border-radius:8px;}
 .modal-close{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:50px;height:50px;background:rgba(255,255,255,.2);border:0;border-radius:50%;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;}
@@ -282,7 +275,7 @@ button{font-family:inherit;cursor:pointer;}
 </div>
 
 <div class="modal" id="modal">
-  <button class="modal-close" id="modalClose">✕</button>
+  <button class="modal-close" id="modalClose" aria-label="사진 닫기">✕</button>
   <img id="modalImg" src="" alt="확대 사진">
 </div>
 
@@ -350,7 +343,7 @@ function buildNav(){
            <div class="nav-sect">공간별 보기</div>`;
   LOCATIONS.forEach((L,i)=>{
     h += `<div class="nav-group" id="g${i}">
-      <button class="nav-loc" onclick="go('loc',${i})">
+      <button class="nav-loc" onclick="go('loc',${i})" aria-expanded="false">
         <span class="nav-loc-name">${esc(L.emoji)} ${esc(L.name)}</span>
         <span class="nav-loc-meta">
           <span class="dot ${L.wait? 'wait':'done'}"></span>
@@ -405,7 +398,7 @@ function viewHome(){
         보수 확인 <span class="s ok">${vc.confirmed}</span> · 확인 어려움 <span class="s unk">${vc.unverifiable}</span> · 미보수 의심 <span class="s bad">${vc.suspect}</span> · 사진 없음 ${vc.no_after}</div>
       <button class="home-cta" onclick="go('need')">⚠️ 점검이 필요한 ${vc.suspect+vc.no_after}곳 모아보기 →</button>
     </div>
-    <div class="hint">왼쪽 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
+    <div class="hint">왼쪽 위 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
     <div class="foot">
       <b>점검일</b> 2026년 5월 9일<br>
       <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
@@ -427,7 +420,7 @@ function makeCard(it){
     photos=`<div class="card-photos single"><div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">현재</span></div></div>`;
   }
   const date = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';
-  return `<div class="card" onclick="go('item','${it.sysno}')">
+  return `<div class="card" role="button" tabindex="0" onclick="go('item','${it.sysno}')">
     ${photos}
     <div class="card-body">
       <div class="card-badges">${badge}<span class="verdict ${V.meta.cls}">🤖 ${V.meta.label}</span></div>
@@ -458,7 +451,7 @@ function viewNeed(){
       <div class="ph-loc">⚠️ 점검이 필요한 곳</div>
       <div class="ph-sub">아직 보수가 확인되지 않은 ${items.length}곳 · <b class="wait">미보수 의심 ${ns}</b> · 사진 없음 ${nn}</div>
     </div>
-    <div class="section-desc" style="max-width:760px;margin:0 auto;padding:0 18px 6px;font-size:var(--f-xs);color:var(--muted);">건설사는 '완료'로 표시했지만, 사진으로 보수가 확인되지 않은 항목이에요. 직접 점검하거나 건설사에 재요청이 필요해요.</div>
+    <div style="max-width:760px;margin:0 auto;padding:0 18px 6px;font-size:var(--f-xs);color:var(--muted);">건설사는 '완료'로 표시했지만, 사진으로 보수가 확인되지 않은 항목이에요. 직접 점검하거나 건설사에 재요청이 필요해요.</div>
     <div class="list">${items.map(makeCard).join('')}</div>`;
 }
 
@@ -544,9 +537,14 @@ function setActive(view, arg){
   }
 }
 function openGroup(i){
-  LOCATIONS.forEach((_,j)=>document.getElementById('g'+j).classList.toggle('open', j===i));
+  LOCATIONS.forEach((_,j)=>{
+    const g=document.getElementById('g'+j); const open=(j===i);
+    g.classList.toggle('open', open);
+    const btn=g.querySelector('.nav-loc'); if(btn) btn.setAttribute('aria-expanded', open?'true':'false');
+  });
 }
 function render(){
+  document.getElementById('modal').classList.remove('active');   // 뒤로가기 등으로 화면 바뀌면 확대사진 닫기
   const h=location.hash.slice(1);
   const main=document.getElementById('main');
   let view='home', arg=null;
@@ -564,11 +562,12 @@ function render(){
 }
 function go(view, arg){
   closeDrawer();
+  const prev=location.hash;
   if(view==='home') location.hash='';
   else if(view==='need') location.hash='need';
   else if(view==='loc') location.hash='loc/'+arg;
   else if(view==='item') location.hash='item/'+arg;
-  if((view==='home' && !location.hash) ) render();   // hash already empty → force render
+  if(location.hash===prev) render();   // 해시 변화 없으면 hashchange 미발생 → 직접 렌더(중복 렌더 방지)
 }
 window.addEventListener('hashchange', render);
 
@@ -583,6 +582,12 @@ document.getElementById('btnHome').addEventListener('click', ()=>go('home'));
 function openModal(src){ document.getElementById('modalImg').src=src; document.getElementById('modal').classList.add('active'); }
 document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('modal').classList.remove('active'));
 document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') document.getElementById('modal').classList.remove('active'); });
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ document.getElementById('modal').classList.remove('active'); closeDrawer(); }
+  else if((e.key==='Enter'||e.key===' ') && document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('card')){
+    e.preventDefault(); document.activeElement.click();   // 카드 키보드 활성화
+  }
+});
 
 buildNav();
 render();
