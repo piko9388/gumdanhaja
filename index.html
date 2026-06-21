@@ -5,8 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="theme-color" content="#0F766E">
 <title>검단 이편한세상 웰카운티 하자 보수 현황</title>
+<meta name="description" content="검단 이편한세상 웰카운티 0111동 605호 신축 하자 79건의 보수 전·후 사진과 AI 보수 판단을 공간별로 확인하는 가족 공유 페이지.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://piko9388.github.io/gumdanhaja/">
 <meta property="og:title" content="검단 이편한세상 웰카운티 하자 보수 현황">
-<meta property="og:description" content="우리 집 하자 보수 전/후를 공간별로 확인하세요">
+<meta property="og:description" content="0111동 605호 — 하자 79건 보수 전·후 사진 + AI 보수 판단(사진으로 확인 22건)">
+<meta property="og:image" content="https://piko9388.github.io/gumdanhaja/thumbs/27499994/after_1.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
@@ -77,6 +82,16 @@ button{font-family:inherit;cursor:pointer;}
 .home-cta{display:block;width:100%;margin-top:16px;background:var(--wait);color:#fff;border:0;border-radius:16px;
   padding:18px;font-size:var(--f-sm);font-weight:800;box-shadow:var(--sh-sm);letter-spacing:-.01em;}
 .home-cta:active{background:#A85C06;}
+.detail-back{display:inline-flex;align-items:center;gap:6px;margin:14px 18px 0;background:var(--card);border:1.5px solid var(--line);color:var(--soft);font-weight:700;font-size:var(--f-sm);padding:11px 18px;border-radius:12px;max-width:calc(760px - 0px);}
+.detail-back:active{background:var(--bg);}
+.csv-btn{display:inline-block;margin:10px auto 0;background:var(--card);border:1.5px solid var(--line);color:var(--soft);font-weight:700;font-size:var(--f-xs);padding:10px 16px;border-radius:10px;}
+.csv-btn:active{background:var(--bg);}
+@media print{
+  .topbar,.sidebar,.scrim,.btn-menu,.detail-back,.csv-btn,.home-cta,.modal,.dl-link{display:none!important;}
+  .main{padding:0;} body{background:#fff;font-size:13px;}
+  .card,.ai-box,.builder-status,.cmp-photos{break-inside:avoid;}
+  .cmp-imgs img,.pgrid img{max-height:8cm;width:auto;}
+}
 .nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);
   padding:4px 8px 8px;letter-spacing:.02em;}
 .nav-group{border-bottom:1px solid var(--line);}
@@ -184,7 +199,7 @@ button{font-family:inherit;cursor:pointer;}
 .ai-box.ok .ai-verdict{color:var(--done);} .ai-box.bad .ai-verdict{color:var(--red);}
 .ai-box.unk .ai-verdict{color:#46554F;} .ai-box.none .ai-verdict{color:#46554F;}
 .ai-reason{font-size:var(--f-sm);color:var(--text);margin-top:6px;line-height:1.55;}
-.ai-disc{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5;}
+.ai-disc{font-size:var(--f-xs);color:var(--muted);margin-top:10px;line-height:1.55;}
 /* AI 요약 (홈) */
 .ai-summary{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:var(--f-xs);color:var(--soft);line-height:1.8;}
 .ai-summary .s{font-weight:800;}
@@ -274,7 +289,7 @@ button{font-family:inherit;cursor:pointer;}
   <main class="main" id="main"></main>
 </div>
 
-<div class="modal" id="modal">
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="사진 확대 보기">
   <button class="modal-close" id="modalClose" aria-label="사진 닫기">✕</button>
   <img id="modalImg" src="" alt="확대 사진">
 </div>
@@ -299,6 +314,23 @@ function verdictOf(sysno){
   const key = (raw && raw.v) || 'no_after';
   const meta = VERDICT_META[key] || VERDICT_META.no_after;
   return { key, meta, reason:(raw && raw.r) || meta.desc };
+}
+
+/* 사진 기반 통계는 ITEMS에서 항상 재계산 (data.js 하드코딩값 드리프트 방지; site_completed/received는 DL 시스템 탭 값이라 유지) */
+STATS.photo_verified = ITEMS.filter(i=>i.hasAfter).length;
+STATS.no_after = ITEMS.filter(i=>!i.hasAfter).length;
+
+/* 목록 CSV 내보내기 (협상·점검 업체용 — 부모 화면 동선엔 영향 없음, 등급 포함) */
+function csvCell(s){ s=String(s==null?'':s); return /[",\n\r]/.test(s)? '"'+s.replace(/"/g,'""')+'"' : s; }
+function exportCSV(items, filename){
+  const head=['등록번호(DL)','공간','부위','결함유형','내용','건설사 상태','보수일','AI 판정','AI 근거','DL등급','DL링크'];
+  const VL={confirmed:'보수 확인',suspect:'미보수 의심',unverifiable:'사진으로 확인 어려움',no_after:'보수 후 사진 없음'};
+  const rows=items.map(it=>{ const v=verdictOf(it.sysno);
+    return [it.sysno,it.loc,it.part,it.dtype,it.content,it.hasAfter?'보수완료(사진 등록)':'사진 준비중',it.repairDate||'',VL[v.key]||v.key,v.reason,it.grade||'',DLBASE+it.sysno].map(csvCell).join(','); });
+  const csv='﻿'+[head.join(','),...rows].join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 
 /* 공간별 그룹. 바닥 난방(분배기)은 전 공간 공통 결함이라 별도 그룹으로 분리해 최상단에.
@@ -375,22 +407,23 @@ function viewHome(){
       <div class="intro-emoji">🏡</div>
       <div class="intro-title">검단 이편한세상 웰카운티<br>하자 보수 현황</div>
       <div class="intro-text">
+        <b>0111동 605호</b> 입주를 앞두고,<br>
         입주 전 발견한 하자들을<br>
         건설사가 어떻게 고쳤는지<br>
-        <b>보수 전 · 후 사진</b>으로 확인하세요.
+        <b>보수 전 · 후 사진</b>으로<br>가족이 함께 확인하는 페이지예요.
       </div>
     </div>
     <div class="stats">
       <div class="stats-title">전체 진행 상황</div>
       <div class="stats-row">
         <div class="stat total"><div class="stat-num">${STATS.total}</div><div class="stat-label">전체<br>하자</div></div>
-        <div class="stat done"><div class="stat-num">${STATS.photo_verified}</div><div class="stat-label">사진으로<br>확인됨</div></div>
+        <div class="stat done"><div class="stat-num">${STATS.photo_verified}</div><div class="stat-label">보수 후<br>사진 있음</div></div>
         <div class="stat wait"><div class="stat-num">${STATS.no_after}</div><div class="stat-label">사진<br>준비중</div></div>
       </div>
       <div class="compare">
         <div class="cmp sys"><div class="cmp-num">${STATS.site_completed}</div><div class="cmp-label">건설사<br>완료 처리</div></div>
         <div class="cmp-arrow">›</div>
-        <div class="cmp photo"><div class="cmp-num">${STATS.photo_verified}</div><div class="cmp-label">사진으로<br>확인 가능</div></div>
+        <div class="cmp photo"><div class="cmp-num">${STATS.photo_verified}</div><div class="cmp-label">보수 후<br>사진 등록</div></div>
       </div>
       <div class="note">건설사 시스템에는 <b>${STATS.site_completed}곳</b>이 '완료'로 표시돼 있어요.
         그중 보수 후 사진까지 등록돼 <b>전 · 후를 직접 비교</b>할 수 있는 곳은 <b>${STATS.photo_verified}곳</b>이에요.</div>
@@ -400,8 +433,10 @@ function viewHome(){
     </div>
     <div class="hint">왼쪽 위 <b>☰ 메뉴</b>에서 공간을 골라<br>하나씩 확인해 보세요</div>
     <div class="foot">
-      <b>점검일</b> 2026년 5월 9일<br>
+      <button class="csv-btn" onclick="exportCSV(ITEMS,'검단하자_전체79건.csv')">📄 전체 목록 CSV로 내보내기</button><br><br>
+      <b>점검일</b> 2026년 5월 9일 (전문 점검 · 홈체크)<br>
       <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
+      <b>데이터</b> DL이앤씨 모바일 AS 시스템 기준<br>
       사진을 누르면 크게 볼 수 있어요
     </div>
   </div>`;
@@ -410,14 +445,14 @@ function viewHome(){
 function makeCard(it){
   const repaired=it.hasAfter;
   const V=verdictOf(it.sysno);
-  const badge = repaired ? `<span class="badge done">✅ 보수 완료</span>` : `<span class="badge wait">🔧 사진 준비중</span>`;
+  const badge = repaired ? `<span class="badge done">✅ 건설사 보수완료</span>` : `<span class="badge wait">🔧 사진 준비중</span>`;
   let photos='';
   if(repaired && it.before.length && it.after.length){
     photos=`<div class="card-photos">
-      <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">전</span></div>
-      <div class="card-photo after"><img loading="lazy" src="${THUMB(it.after[0])}" alt=""><span class="ba-label">후</span></div></div>`;
+      <div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt="보수 전 사진"><span class="ba-label">전</span></div>
+      <div class="card-photo after"><img loading="lazy" src="${THUMB(it.after[0])}" alt="보수 후 사진"><span class="ba-label">후</span></div></div>`;
   } else if(it.before.length){
-    photos=`<div class="card-photos single"><div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt=""><span class="ba-label">현재</span></div></div>`;
+    photos=`<div class="card-photos single"><div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt="현재 사진"><span class="ba-label">현재</span></div></div>`;
   }
   const date = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료` : '🔧 보수 예정';
   return `<div class="card" role="button" tabindex="0" onclick="go('item','${it.sysno}')">
@@ -452,6 +487,7 @@ function viewNeed(){
       <div class="ph-sub">아직 보수가 확인되지 않은 ${items.length}곳 · <b class="wait">미보수 의심 ${ns}</b> · 사진 없음 ${nn}</div>
     </div>
     <div style="max-width:760px;margin:0 auto;padding:0 18px 6px;font-size:var(--f-xs);color:var(--muted);">건설사는 '완료'로 표시했지만, 사진으로 보수가 확인되지 않은 항목이에요. 직접 점검하거나 건설사에 재요청이 필요해요.</div>
+    <div style="max-width:760px;margin:0 auto;padding:0 18px 10px;"><button class="csv-btn" onclick="exportCSV(needItems(),'검단하자_점검필요${items.length}건.csv')">📄 이 목록 CSV로 내보내기</button></div>
     <div class="list">${items.map(makeCard).join('')}</div>`;
 }
 
@@ -491,7 +527,7 @@ function viewItem(sysno){
       <div class="ai-h">🤖 AI 보수 판단 <span class="ai-tag">참고용</span></div>
       <div class="ai-verdict">${V.meta.emoji} ${V.meta.label}</div>
       <div class="ai-reason">${esc(V.reason)}</div>
-      <div class="ai-disc">보수 전·후 사진을 AI가 자동 비교한 추정이에요. 최종 확인은 직접 점검을 권장해요.</div>
+      <div class="ai-disc">Claude AI가 보수 전·후 사진을 비교한 추정이에요 (2026-06-21 분석). '증거'가 아니라 재점검 체크용이며, 최종 확인은 직접 점검을 권장해요.</div>
     </div>`;
 
   // 4) 식별 정보 + DL 시스템 (맨 아래)
@@ -508,7 +544,8 @@ function viewItem(sysno){
     <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>`;
 
   const G=groupOf(it);
-  return `<div class="detail-hero"><div class="dh-wrap">
+  return `<button class="detail-back" onclick="go('loc',${locIdx(groupKeyOf(it))})">← 목록으로</button>
+    <div class="detail-hero"><div class="dh-wrap">
       <div class="loc">${esc(G.emoji)} ${esc(G.name)}</div>
       <div class="desc">${esc(it.content)}</div>
     </div></div>
@@ -579,7 +616,7 @@ document.getElementById('scrim').addEventListener('click', closeDrawer);
 document.getElementById('btnHome').addEventListener('click', ()=>go('home'));
 
 /* ===== 모달 ===== */
-function openModal(src){ document.getElementById('modalImg').src=src; document.getElementById('modal').classList.add('active'); }
+function openModal(src){ document.getElementById('modalImg').src=src; document.getElementById('modal').classList.add('active'); document.getElementById('modalClose').focus(); }
 document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('modal').classList.remove('active'));
 document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') document.getElementById('modal').classList.remove('active'); });
 document.addEventListener('keydown', e=>{
