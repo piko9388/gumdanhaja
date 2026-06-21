@@ -51,6 +51,7 @@ GitHub Pages: **https://piko9388.github.io/gumdanhaja/**
 |------|------|
 | `index.html` | 메인 페이지 (디자인 + 동작 전부 포함) |
 | `data.js` | 하자 데이터 79건 (`ITEMS`, `STATS`) |
+| `verdicts.js` | 하자별 AI 보수 판단 (`VERDICTS`) |
 | `images/` | **원본 고화질** 보수 전/후 사진 218장 — `images/{등록번호}/before_*.jpg`, `after_*.jpg` (탭하면 원본 확대) |
 | `thumbs/` | 화면 표시용 **썸네일**(긴 변 768px) — 목록·상세에서 빠르게 로딩 |
 | `.nojekyll` | GitHub Pages가 폴더를 그대로 서빙하도록 하는 표시 파일 |
@@ -64,6 +65,24 @@ GitHub Pages: **https://piko9388.github.io/gumdanhaja/**
 3. **Source**: `Deploy from a branch`
 4. **Branch**: `main` / 폴더 `/ (root)` → **Save**
 5. 1~2분 뒤 `https://piko9388.github.io/gumdanhaja/` 접속
+
+## 추가 기능
+
+- **CSV 내보내기** — 홈 하단 "전체 목록 CSV", `⚠️ 점검이 필요한 곳` 화면의 "이 목록 CSV" 버튼. 등록번호·공간·부위·결함유형·내용·건설사 상태·보수일·AI 판정·근거·DL등급·DL링크 포함 (엑셀 한글 BOM). 시공사 재요청서·협상 문서에 그대로 활용.
+- **인쇄(`@media print`)** — 인쇄 시 메뉴·버튼·모달 숨김, 카드 단위로 페이지 분할.
+- **상세 화면 `← 목록으로`** — 해당 공간 목록으로 복귀.
+
+## 유지보수 — 보수 사진이 추가로 등록되면
+
+DL 시스템에 새 작업후 사진이 올라오면 다음 순서로 갱신합니다.
+
+1. `images/{등록번호}/after_*.jpg` 원본 추가
+2. 같은 파일을 긴 변 768px 썸네일로 변환해 `thumbs/{등록번호}/after_*.jpg` 추가
+   - 예: `python3 -c "from PIL import Image,ImageOps; im=ImageOps.exif_transpose(Image.open('images/SYS/after_1.jpg')).convert('RGB'); im.thumbnail((768,768)); im.save('thumbs/SYS/after_1.jpg','JPEG',quality=80,optimize=True)"`
+3. `data.js`의 해당 항목 `hasAfter:true`, `after:[...]`, `repairDate:"YYYY-MM-DD"` 수정
+   - `STATS.photo_verified`·`no_after`는 **수정 불필요** — `index.html`이 `ITEMS`에서 자동 재계산 (단 `site_completed`/`site_received`는 DL 시스템 탭 값이라 수동)
+4. `verdicts.js`의 해당 `VERDICTS[등록번호]`를 새 사진 기준으로 재판정
+5. `git add -A && git commit && git push`
 
 ## 데이터 출처
 
