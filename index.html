@@ -77,7 +77,7 @@ button{font-family:inherit;cursor:pointer;}
 @media print{
   .topbar,.sidebar,.scrim,.btn-menu,.detail-back,.csv-btn,.home-cta,.modal,.dl-link{display:none!important;}
   .main{padding:0;} body{background:#fff;font-size:13px;}
-  .card,.ai-box,.builder-status,.cmp-photos,.xref,.tl,.funnel{break-inside:avoid;}
+  .card,.ai-box,.builder-status,.cmp-photos,.tl,.funnel{break-inside:avoid;}
   .cmp-imgs img{max-height:8cm;width:auto;}
 }
 .nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);padding:4px 8px 8px;letter-spacing:.02em;}
@@ -200,14 +200,6 @@ button{font-family:inherit;cursor:pointer;}
 .bs-sub{font-size:var(--f-xs);color:var(--muted);margin-top:4px;font-weight:600;}
 .bs-reply{margin-top:12px;padding:13px 15px;background:var(--bg);border-radius:12px;font-size:var(--f-sm);color:var(--text);line-height:1.6;}
 .bs-reply .q{font-weight:800;color:var(--muted);font-size:var(--f-xs);display:block;margin-bottom:4px;}
-.xref{max-width:760px;margin:14px auto 0;width:calc(100% - 36px);border:2px solid var(--tealLine);background:var(--tealBg);border-radius:16px;padding:16px 18px;}
-.xref-h{font-size:var(--f-sm);font-weight:800;color:var(--tealD);margin-bottom:4px;}
-.xref-note{font-size:var(--f-xs);color:var(--soft);margin-bottom:10px;line-height:1.5;}
-.xref-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
-  border-radius:11px;padding:12px 13px;margin-bottom:7px;font-size:var(--f-xs);color:var(--text);line-height:1.4;}
-.xref-round{font-weight:800;color:#fff;background:var(--teal);border-radius:7px;padding:2px 9px;font-size:14px;flex:0 0 auto;}
-.xref-txt{flex:1;min-width:0;}
-.xref-st{font-size:13px;color:var(--muted);display:block;margin-top:2px;}
 /* 🔁 1차→2차 변화 타임라인 */
 .tl{max-width:760px;margin:14px auto 0;width:calc(100% - 36px);border:2px solid var(--rejectLine);background:var(--rejectBg);border-radius:16px;padding:16px 18px;}
 .tl-h{font-size:var(--f-sm);font-weight:800;color:var(--reject);margin-bottom:4px;}
@@ -449,7 +441,7 @@ function viewHome(){
       <div class="fn-total">${fLabel} 전체 하자<b>${its.length}건</b></div>
       <div class="fn-row done"><div class="fn-num">${st.done}</div><div class="fn-txt">
         <div class="fn-lab">✅ 수리 완료</div>
-        <div class="fn-sub">건설사가 보수 후 사진 등록 · 🤖 AI 사진 재검증 통과 <b>${aiConfirmed}건</b></div></div></div>
+        <div class="fn-sub">건설사가 보수 후 사진 등록 · 🤖 AI 사진 재검증 통과 <b>${aiConfirmed}건</b><br>나머지는 사진 각도·기능 결함이라 사진만으론 판독이 어려워요 (상세에서 확인)</div></div></div>
       <div class="fn-row remain"><div class="fn-num">${remain}</div><div class="fn-txt">
         <div class="fn-lab">🚩 아직 남은 곳</div>
         <div class="fn-sub">🏢 조치 예정 ${st.pending} · 🏢 하자 아님 ${st.reject} · 🔧 접수 대기 ${st.wait}</div></div></div>
@@ -468,7 +460,7 @@ function viewHome(){
         </span>
         <span class="prog-caret">›</span>
       </button>`).join('')}</div>
-    <div class="hint">위 <b>전체 / 1차 / 2차</b>로 나눠 볼 수 있어요.<br>공간을 누르면 완료·남은 항목이 나와요.</div>
+    <div class="hint">왼쪽 메뉴(모바일은 ☰)에서 <b>전체 / 1차 / 2차</b>로 나눠 볼 수 있어요.<br>공간을 누르면 완료·남은 항목이 나와요.</div>
     <div class="foot">
       <button class="csv-btn" onclick="exportCSV(ITEMS,'하자현황_전체${ITEMS.length}건.csv')">📄 전체(1·2차) CSV로 내보내기</button><br><br>
       <b>1차 점검</b> 2026년 5월 9~10일 · <b>2차 점검</b> 2026년 7월 2일<br>
@@ -544,7 +536,7 @@ function viewItem(sysno){
     const rows=grp.map(o=>{
       const so=statusOf(o), cur=o.sysno===it.sysno;
       const th=(o.hasAfter&&o.after[0])?THUMB(o.after[0]):(o.before[0]?THUMB(o.before[0]):'');
-      return `<button class="tl-row ${cur?'cur':''}" ${cur?'disabled':''} onclick="goItem('${o.sysno}')">
+      return `<button class="tl-row ${cur?'cur':''}" ${cur?'disabled':''}${cur?'':` onclick="goItem('${o.sysno}')"`}>
         <span class="tl-round">${o.round}차</span>
         ${th?`<img class="tl-thumb" loading="lazy" src="${th}" alt="">`:'<span class="tl-thumb noimg"></span>'}
         <span class="tl-txt"><span class="tl-st ${so.cls}">${so.emoji} ${so.label}</span>
