@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="theme-color" content="#0F766E">
-<title>검단 이편한세상 웰카운티 하자 현황</title>
-<meta name="description" content="검단 이편한세상 웰카운티 2511동(구 0111동) 0605호 신축 하자 121건(1차·2차) 보수 전·후 사진 + 건설사 답변 + AI 보수 판단을 확인하는 가족 공유 페이지.">
+<title>신축 아파트 하자 보수 현황</title>
+<meta name="description" content="신축 아파트 사전점검 하자 121건(1·2차)의 수리 완료·미완료 현황을 공간별로, 보수 전·후 사진 + 건설사 답변 + AI 보수 판단과 함께 확인하는 페이지.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://piko9388.github.io/gumdanhaja/">
-<meta property="og:title" content="검단 이편한세상 웰카운티 하자 현황">
-<meta property="og:description" content="2511동 0605호 — 하자 121건(1·2차) 보수 전·후 사진 + 건설사 답변 + AI 보수 판단">
+<meta property="og:title" content="신축 아파트 하자 보수 현황">
+<meta property="og:description" content="하자 121건(1·2차) — 공간별 수리 완료/남음 + 보수 전·후 사진 + 건설사 답변 + AI 보수 판단">
 <meta property="og:image" content="https://piko9388.github.io/gumdanhaja/thumbs/27499994/after_1.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏡</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +34,6 @@ body{font-family:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
   background:var(--bg); color:var(--text); line-height:1.6; font-size:var(--f); -webkit-font-smoothing:antialiased;}
 button{font-family:inherit;cursor:pointer;}
 
-/* 상단바 */
 .topbar{position:sticky; top:0; z-index:100; height:calc(var(--hdr) + env(safe-area-inset-top));
   background:linear-gradient(135deg,var(--teal),var(--tealD)); color:#fff;
   display:flex; align-items:center; gap:12px; padding:0 16px; padding-top:env(safe-area-inset-top); box-shadow:var(--sh-md);}
@@ -45,7 +44,6 @@ button{font-family:inherit;cursor:pointer;}
 .t1{font-size:var(--f-md);font-weight:800;letter-spacing:-.02em;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .t2{font-size:var(--f-xs);color:rgba(255,255,255,.85);margin-top:2px;}
 
-/* 레이아웃 */
 .layout{display:flex;align-items:flex-start;}
 .sidebar{flex:0 0 var(--side); width:var(--side); position:sticky; top:var(--hdr);
   height:calc(100vh - var(--hdr)); height:calc(100dvh - var(--hdr));
@@ -53,12 +51,10 @@ button{font-family:inherit;cursor:pointer;}
 .scrim{display:none;}
 .main{flex:1 1 auto;min-width:0;padding:0 0 60px;}
 
-/* 1차/2차 전환 탭 */
-.round-tabs{display:flex;gap:6px;margin-bottom:14px;}
-.rt{flex:1;border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:12px 6px;
-  font-size:var(--f-xs);font-weight:800;color:var(--soft);display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.2;}
-.rt.on{background:var(--teal);color:#fff;border-color:var(--teal);}
-.rt-sub{font-size:12px;font-weight:600;opacity:.85;}
+/* 차수 필터 */
+.rfilter{display:flex;gap:6px;margin-bottom:14px;}
+.rf{flex:1;border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:11px 4px;font-size:var(--f-xs);font-weight:800;color:var(--soft);}
+.rf.on{background:var(--teal);color:#fff;border-color:var(--teal);}
 
 /* 사이드 메뉴 */
 .nav-home{width:100%; text-align:left; border:2px solid var(--tealLine); background:var(--tealBg); color:var(--tealD); font-weight:800;
@@ -81,7 +77,7 @@ button{font-family:inherit;cursor:pointer;}
 @media print{
   .topbar,.sidebar,.scrim,.btn-menu,.detail-back,.csv-btn,.home-cta,.modal,.dl-link{display:none!important;}
   .main{padding:0;} body{background:#fff;font-size:13px;}
-  .card,.ai-box,.builder-status,.cmp-photos,.xref{break-inside:avoid;}
+  .card,.ai-box,.builder-status,.cmp-photos,.xref,.funnel{break-inside:avoid;}
   .cmp-imgs img{max-height:8cm;width:auto;}
 }
 .nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);padding:4px 8px 8px;letter-spacing:.02em;}
@@ -94,7 +90,6 @@ button{font-family:inherit;cursor:pointer;}
 .nav-loc-meta{display:flex;align-items:center;gap:8px;flex:0 0 auto;}
 .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
 .dot.done{background:var(--done);} .dot.wait{background:var(--wait);}
-.dot.pending{background:var(--pending);} .dot.reject{background:var(--reject);}
 .nav-count{font-size:var(--f-xs);font-weight:800;color:var(--muted);background:var(--bg);border-radius:999px;padding:2px 10px;min-width:34px;text-align:center;}
 .nav-caret{font-size:15px;color:var(--muted);transition:transform .2s;}
 .nav-group.open .nav-caret{transform:rotate(180deg);}
@@ -111,27 +106,37 @@ button{font-family:inherit;cursor:pointer;}
 
 /* 홈 */
 .wrap{max-width:760px;margin:0 auto;padding:18px;}
-.intro{background:var(--card);border-radius:22px;padding:28px 24px;box-shadow:var(--sh-md);text-align:center;}
-.intro-emoji{font-size:50px;margin-bottom:10px;}
-.intro-title{font-size:var(--f-lg);font-weight:800;color:var(--tealD);line-height:1.35;letter-spacing:-.02em;margin-bottom:14px;}
-.intro-text{font-size:var(--f);color:var(--soft);line-height:1.7;}
-.intro-text b{color:var(--done);font-weight:800;}
-.stats{background:var(--card);border-radius:20px;padding:24px 20px;box-shadow:var(--sh-md);margin-top:18px;}
-.stats-title{font-size:var(--f-sm);font-weight:700;color:var(--soft);text-align:center;margin-bottom:16px;}
-.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;text-align:center;}
-.stat{padding:15px 4px;border-radius:14px;border:2px solid;}
-.stat.done{background:var(--doneBg);border-color:var(--doneLine);}
-.stat.pending{background:var(--pendingBg);border-color:var(--pendingLine);}
-.stat.reject{background:var(--rejectBg);border-color:var(--rejectLine);}
-.stat.wait{background:var(--waitBg);border-color:var(--waitLine);}
-.stat-num{font-size:var(--f-lg);font-weight:800;line-height:1;letter-spacing:-.04em;}
-.stat.done .stat-num{color:var(--done);} .stat.pending .stat-num{color:var(--pending);}
-.stat.reject .stat-num{color:var(--reject);} .stat.wait .stat-num{color:var(--wait);}
-.stat-label{font-size:14px;font-weight:700;color:var(--soft);margin-top:6px;line-height:1.25;}
-.note{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:var(--f-xs);color:var(--soft);line-height:1.7;}
-.ai-summary{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:var(--f-xs);color:var(--soft);line-height:1.8;}
-.ai-summary .s{font-weight:800;} .ai-summary .s.ok{color:var(--done);} .ai-summary .s.bad{color:var(--red);} .ai-summary .s.unk{color:#55655F;}
-.hint{margin-top:16px;padding:16px 18px;border:2px dashed var(--tealLine);border-radius:14px;
+.intro{background:var(--card);border-radius:22px;padding:26px 24px;box-shadow:var(--sh-md);text-align:center;}
+.intro-emoji{font-size:48px;margin-bottom:8px;}
+.intro-title{font-size:var(--f-lg);font-weight:800;color:var(--tealD);line-height:1.35;letter-spacing:-.02em;margin-bottom:10px;}
+.intro-text{font-size:var(--f-sm);color:var(--soft);line-height:1.65;}
+
+.funnel{background:var(--card);border-radius:20px;padding:22px 20px;box-shadow:var(--sh-md);margin-top:18px;}
+.fn-total{text-align:center;font-size:var(--f-sm);color:var(--soft);font-weight:700;margin-bottom:16px;}
+.fn-total b{font-size:var(--f-xxl);color:var(--teal);display:block;letter-spacing:-.04em;line-height:1.1;}
+.fn-row{display:flex;align-items:center;gap:14px;padding:16px 16px;border-radius:16px;margin-bottom:10px;border:2px solid;}
+.fn-row.done{background:var(--doneBg);border-color:var(--doneLine);}
+.fn-row.remain{background:var(--waitBg);border-color:var(--waitLine);}
+.fn-num{font-size:var(--f-xl);font-weight:800;letter-spacing:-.04em;line-height:1;flex:0 0 auto;min-width:54px;text-align:center;}
+.fn-row.done .fn-num{color:var(--done);} .fn-row.remain .fn-num{color:var(--wait);}
+.fn-txt{flex:1;min-width:0;} .fn-lab{font-size:var(--f-md);font-weight:800;letter-spacing:-.01em;}
+.fn-row.done .fn-lab{color:var(--done);} .fn-row.remain .fn-lab{color:var(--wait);}
+.fn-sub{font-size:var(--f-xs);color:var(--soft);margin-top:4px;line-height:1.5;}
+.fn-note{margin-top:6px;padding:12px 14px;background:#FCEAE7;border-radius:12px;font-size:var(--f-xs);color:#8A2A20;line-height:1.5;font-weight:600;}
+
+.prog-title{max-width:760px;margin:26px auto 8px;padding:0 20px;font-size:var(--f-md);font-weight:800;color:var(--text);}
+.prog-list{max-width:760px;margin:0 auto;padding:0 18px 10px;}
+.prog-row{width:100%;display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:15px 16px;margin-bottom:10px;text-align:left;}
+.prog-row:active{background:var(--bg);}
+.prog-emoji{font-size:25px;flex:0 0 auto;}
+.prog-name{flex:1;font-size:var(--f-sm);font-weight:800;min-width:0;}
+.prog-badges{display:flex;gap:6px;flex:0 0 auto;}
+.pb{font-size:14px;font-weight:800;border-radius:999px;padding:4px 11px;border:1.5px solid;}
+.pb.done{background:var(--doneBg);color:var(--done);border-color:var(--doneLine);}
+.pb.remain{background:var(--waitBg);color:var(--wait);border-color:var(--waitLine);}
+.pb.zero{opacity:.35;}
+.prog-caret{font-size:16px;color:var(--muted);flex:0 0 auto;}
+.hint{max-width:760px;margin:8px auto 0;padding:16px 18px;border:2px dashed var(--tealLine);border-radius:14px;
   background:var(--tealBg);color:var(--tealD);font-size:var(--f-sm);font-weight:700;text-align:center;line-height:1.6;}
 
 /* 공간/목록 */
@@ -140,7 +145,10 @@ button{font-family:inherit;cursor:pointer;}
 .page-head .ph-sub{font-size:var(--f-sm);color:var(--soft);margin-top:6px;}
 .ph-sub b.done{color:var(--done);} .ph-sub b.wait{color:var(--wait);} .ph-sub b.reject{color:var(--reject);}
 .section-desc{max-width:760px;margin:0 auto;padding:0 18px 6px;font-size:var(--f-xs);color:var(--muted);line-height:1.5;}
-.list{max-width:760px;margin:0 auto;padding:12px 18px 20px;}
+.list-sec{max-width:760px;margin:20px auto 2px;padding:0 20px;display:flex;align-items:center;gap:8px;font-size:var(--f-md);font-weight:800;}
+.list-sec .c{font-size:var(--f-sm);color:var(--muted);font-weight:700;}
+.list-sec.remain{color:var(--wait);} .list-sec.done{color:var(--done);}
+.list{max-width:760px;margin:0 auto;padding:10px 18px 8px;}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;margin-bottom:14px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;}
 .card:active{transform:scale(.99);box-shadow:var(--sh-md);}
 .card-photos{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);}
@@ -153,6 +161,7 @@ button{font-family:inherit;cursor:pointer;}
 .card-photo.after .ba-label{background:rgba(6,122,83,.92);}
 .card-body{padding:16px 18px;}
 .card-badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.rlabel{font-size:14px;font-weight:800;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:3px 9px;}
 .badge{font-size:var(--f-xs);font-weight:800;padding:5px 12px;border-radius:999px;display:inline-block;border:1.5px solid;}
 .badge.done{background:var(--doneBg);color:var(--done);border-color:var(--doneLine);}
 .badge.pending{background:var(--pendingBg);color:var(--pending);border-color:var(--pendingLine);}
@@ -174,7 +183,6 @@ button{font-family:inherit;cursor:pointer;}
 .detail-hero .rd{font-size:var(--f-xs);font-weight:700;color:rgba(255,255,255,.8);margin-bottom:6px;}
 .detail-hero .loc{font-size:var(--f-xl);font-weight:800;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;}
 .detail-hero .desc{font-size:var(--f);color:rgba(255,255,255,.92);line-height:1.5;margin-top:8px;}
-
 .builder-status{max-width:760px;margin:-16px auto 0;width:calc(100% - 36px);background:var(--card);
   border-radius:18px;padding:18px 20px;box-shadow:var(--sh-md);border-left:8px solid var(--line);}
 .builder-status.done{border-left-color:var(--done);}
@@ -190,8 +198,6 @@ button{font-family:inherit;cursor:pointer;}
 .bs-sub{font-size:var(--f-xs);color:var(--muted);margin-top:4px;font-weight:600;}
 .bs-reply{margin-top:12px;padding:13px 15px;background:var(--bg);border-radius:12px;font-size:var(--f-sm);color:var(--text);line-height:1.6;}
 .bs-reply .q{font-weight:800;color:var(--muted);font-size:var(--f-xs);display:block;margin-bottom:4px;}
-
-/* 교차검증 */
 .xref{max-width:760px;margin:14px auto 0;width:calc(100% - 36px);border:2px solid var(--tealLine);background:var(--tealBg);border-radius:16px;padding:16px 18px;}
 .xref-h{font-size:var(--f-sm);font-weight:800;color:var(--tealD);margin-bottom:4px;}
 .xref-note{font-size:var(--f-xs);color:var(--soft);margin-bottom:10px;line-height:1.5;}
@@ -200,7 +206,6 @@ button{font-family:inherit;cursor:pointer;}
 .xref-round{font-weight:800;color:#fff;background:var(--teal);border-radius:7px;padding:2px 9px;font-size:14px;flex:0 0 auto;}
 .xref-txt{flex:1;min-width:0;}
 .xref-st{font-size:13px;color:var(--muted);display:block;margin-top:2px;}
-
 .section-label{max-width:760px;margin:22px auto 0;padding:0 18px;font-size:var(--f-sm);font-weight:800;color:var(--text);}
 .cmp-photos{max-width:760px;margin:10px auto 0;padding:0 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
 .cmp-col{min-width:0;}
@@ -213,19 +218,16 @@ button{font-family:inherit;cursor:pointer;}
 .cmp-single{max-width:760px;margin:10px auto 0;padding:0 18px;}
 .cmp-single .cmp-col-h{background:var(--wait);}
 .no-photo{padding:40px 20px;text-align:center;color:var(--muted);background:var(--bg);border-radius:16px;}
-
 .ai-box{max-width:760px;margin:16px auto 0;width:calc(100% - 36px);border-radius:16px;padding:18px 20px;border:2px solid;}
 .ai-box.ok{background:var(--doneBg);border-color:var(--doneLine);}
 .ai-box.bad{background:#FCEAE7;border-color:#F3B4AC;}
 .ai-box.unk{background:#F4F6F5;border-color:var(--line);}
-.ai-box.none{background:#F4F6F5;border-color:var(--line);}
 .ai-h{font-size:var(--f-xs);font-weight:800;color:var(--soft);display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .ai-tag{font-size:13px;font-weight:700;background:rgba(0,0,0,.06);color:var(--soft);border-radius:6px;padding:2px 9px;}
 .ai-verdict{font-size:var(--f-md);font-weight:800;}
 .ai-box.ok .ai-verdict{color:var(--done);} .ai-box.bad .ai-verdict{color:var(--red);} .ai-box.unk .ai-verdict{color:#46554F;}
 .ai-reason{font-size:var(--f-sm);color:var(--text);margin-top:6px;line-height:1.55;}
 .ai-disc{font-size:var(--f-xs);color:var(--muted);margin-top:10px;line-height:1.55;}
-
 .ident-box{max-width:760px;margin:18px auto 0;padding:0 18px;}
 .ident-box .ib-title{font-size:var(--f-xs);font-weight:700;color:var(--muted);margin-bottom:8px;}
 .ident-chips{display:flex;flex-wrap:wrap;gap:8px;}
@@ -234,14 +236,12 @@ button{font-family:inherit;cursor:pointer;}
   background:var(--teal);color:#fff;font-size:var(--f-sm);font-weight:800;text-decoration:none;padding:16px;border-radius:14px;box-shadow:var(--sh-sm);}
 .dl-link:active{background:var(--tealD);}
 .dl-hint{max-width:760px;margin:8px auto 0;padding:0 18px;font-size:14px;color:var(--muted);text-align:center;}
-
 .modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom));}
 .modal.active{display:flex;}
 .modal img{max-width:100%;max-height:100%;border-radius:8px;}
 .modal-close{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;width:50px;height:50px;background:rgba(255,255,255,.2);border:0;border-radius:50%;color:#fff;font-size:28px;display:flex;align-items:center;justify-content:center;}
 .foot{max-width:760px;margin:0 auto;text-align:center;padding:34px 20px;font-size:var(--f-xs);color:var(--muted);line-height:1.8;}
 .foot b{color:var(--soft);}
-
 @media (max-width:919px){
   .sidebar{position:fixed;top:0;left:0;height:100vh;height:100dvh;width:88%;max-width:360px;z-index:130;
     transform:translateX(-100%);transition:transform .25s ease;
@@ -258,8 +258,8 @@ button{font-family:inherit;cursor:pointer;}
 <header class="topbar">
   <button class="icon-btn btn-menu" id="btnMenu" aria-label="메뉴 열기">☰</button>
   <div class="titles">
-    <div class="t1">검단 이편한세상 웰카운티 하자 현황</div>
-    <div class="t2">2511동 0605호 (구 0111동)</div>
+    <div class="t1">신축 아파트 하자 보수 현황</div>
+    <div class="t2">e편한세상 검단 웰카운티</div>
   </div>
   <button class="icon-btn" id="btnHome" aria-label="처음으로">🏠</button>
 </header>
@@ -283,22 +283,23 @@ const DLBASE = 'https://mobileas.dlenc.co.kr/dch7001/';
 function fmtDate(d){ if(!d) return ''; const [y,m,day]=d.split('-'); return `${y}년 ${+m}월 ${+day}일`; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-/* ===== 상태(건설사 처리) ===== */
+/* 상태(건설사 처리) : done=수리완료 / pending=조치예정 / reject=하자아님 / wait=접수대기 */
 const STATUS_META = {
-  done:   {emoji:'✅', label:'보수 완료',        cls:'done'},
+  done:   {emoji:'✅', label:'수리 완료',         cls:'done'},
   pending:{emoji:'🏢', label:'건설사: 조치 예정', cls:'pending'},
   reject: {emoji:'🏢', label:'건설사: 하자 아님', cls:'reject'},
   wait:   {emoji:'🔧', label:'접수 · 대기',       cls:'wait'},
 };
 function statusOf(it){
-  let key = 'wait';
+  let key='wait';
   if(it.hasAfter) key='done';
   else if(it.dlReplyCat==='pending') key='pending';
   else if(it.dlReplyCat==='reject') key='reject';
   return { key, ...STATUS_META[key] };
 }
+const isDone = it => statusOf(it).key==='done';   // 물리적 수리 완료(사진 有)
 
-/* ===== AI 보수 판단 ===== */
+/* AI 보수 판단 */
 const VERDICT_META = {
   confirmed:    {emoji:'✅', label:'보수 확인',          cls:'ok',   desc:'보수 전·후 사진에서 결함이 해소된 것으로 보여요.'},
   suspect:      {emoji:'❗', label:'미보수 의심',        cls:'bad',  desc:'보수 후 사진에도 문제가 남아 있는 것으로 보여요. 직접 확인이 필요해요.'},
@@ -312,33 +313,31 @@ function verdictOf(sysno){
   return { key, meta, reason:(raw && raw.r) || meta.desc };
 }
 
-/* ===== 차수 ===== */
-let ROUND = 2;                                  // 기본 최신(2차)
-function itemsIn(r){ return ITEMS.filter(i=>i.round===r); }
+/* 차수 필터: 'all' | 1 | 2 (기본 전체) */
+let RFILTER='all';
+function itemsF(){ return RFILTER==='all' ? ITEMS : ITEMS.filter(i=>i.round===RFILTER); }
 
-/* ===== 교차검증(1↔2차 관련 이력) ===== */
+/* 교차검증(1↔2차) */
 function words(s){ return String(s||'').replace(/[^가-힣0-9a-zA-Z]/g,' ').split(/\s+/).filter(w=>w.length>=2); }
 function xrefOf(it){
-  const other = it.round===1?2:1;
-  const mine = new Set(words(it.content));
-  return ITEMS.filter(o=>o.round===other && o.loc===it.loc && o.dtype===it.dtype)
-              .filter(o=>words(o.content).some(w=>mine.has(w)));
+  const other=it.round===1?2:1, mine=new Set(words(it.content));
+  return ITEMS.filter(o=>o.round===other && o.loc===it.loc && o.dtype===it.dtype).filter(o=>words(o.content).some(w=>mine.has(w)));
 }
 
-/* ===== CSV ===== */
+/* CSV */
 function csvCell(s){ s=String(s==null?'':s); return /[",\n\r]/.test(s)? '"'+s.replace(/"/g,'""')+'"' : s; }
 function exportCSV(items, filename){
-  const head=['등록번호(DL)','차수','공간','부위','결함유형','내용','상태','건설사 답변','보수일','AI 판정','DL등급','DL링크'];
+  const head=['등록번호(DL)','차수','공간','부위','결함유형','내용','수리상태','건설사 답변','보수일','AI 판정','DL등급','DL링크'];
   const VL={confirmed:'보수 확인',suspect:'미보수 의심',unverifiable:'사진으로 확인 어려움',no_after:'보수후 사진 없음'};
   const rows=items.map(it=>{ const v=verdictOf(it.sysno);
-    return [it.sysno, it.round+'차', it.loc, it.part, it.dtype, it.content, statusOf(it).label, it.dlReply||'', it.repairDate||'', VL[v.key]||v.key, it.grade||'', DLBASE+it.sysno].map(csvCell).join(','); });
+    return [it.sysno,it.round+'차',it.loc,it.part,it.dtype,it.content,statusOf(it).label,it.dlReply||'',it.repairDate||'',VL[v.key]||v.key,it.grade||'',DLBASE+it.sysno].map(csvCell).join(','); });
   const csv='﻿'+[head.join(','),...rows].join('\r\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename;
   document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
 }
 
-/* ===== 공간별 그룹 (차수별로 재계산) ===== */
+/* 공간별 그룹 (필터 적용 후 재계산) */
 const HEAT='__HEAT__';
 const LOC_META={ [HEAT]:{name:'바닥 난방 (전 공간)', emoji:'🔥'} };
 function groupKeyOf(it){ return it.part==='분배기' ? HEAT : it.loc; }
@@ -347,41 +346,39 @@ const stRank = it => ({wait:0, reject:1, pending:2, done:3}[statusOf(it).key]);
 let LOCATIONS=[];
 function buildLocations(){
   const map={};
-  itemsIn(ROUND).forEach(it=>{ const k=groupKeyOf(it); (map[k]=map[k]||[]).push(it); });
+  itemsF().forEach(it=>{ const k=groupKeyOf(it); (map[k]=map[k]||[]).push(it); });
   LOCATIONS=Object.keys(map).map(key=>{
     const items=map[key].slice().sort((a,b)=>{ const r=stRank(a)-stRank(b); return r||a.sysno.localeCompare(b.sysno); });
     const meta=LOC_META[key];
-    const unresolved=items.filter(i=>{const k=statusOf(i).key; return k==='wait'||k==='reject';}).length;
-    return { loc:key, name:meta?meta.name:key, emoji:meta?meta.emoji:items[0].emoji, items,
-      done:items.filter(i=>i.hasAfter).length, unresolved };
-  }).sort((a,b)=>{ if(a.loc===HEAT)return -1; if(b.loc===HEAT)return 1; return b.items.length-a.items.length; });
+    const done=items.filter(isDone).length;
+    return { loc:key, name:meta?meta.name:key, emoji:meta?meta.emoji:items[0].emoji, items, done, remain:items.length-done };
+  }).sort((a,b)=>{ if(a.remain!==b.remain) return b.remain-a.remain; return b.items.length-a.items.length; }); // 남음 많은 곳 먼저
 }
 const locIdx = key => LOCATIONS.findIndex(L=>L.loc===key);
 
-/* ===== 확인이 필요한 곳 (현재 차수) ===== */
-function needItems(){
-  const rank=it=>{ const s=statusOf(it).key; if(s==='wait')return 0; if(verdictOf(it.sysno).key==='suspect')return 1; if(s==='reject')return 2; return 9; };
-  return itemsIn(ROUND).filter(it=>{ const s=statusOf(it).key; return s==='wait'||s==='reject'||verdictOf(it.sysno).key==='suspect'; })
-    .sort((a,b)=>{ const r=rank(a)-rank(b); return r||a.sysno.localeCompare(b.sysno); });
+/* 남은 곳 = 미완료(수리 안 됨) */
+function remainList(){
+  return itemsF().filter(it=>!isDone(it)).sort((a,b)=>{ const r=stRank(a)-stRank(b); return r||a.sysno.localeCompare(b.sysno); });
 }
 
 /* ===== 사이드 메뉴 ===== */
 function buildNav(){
-  const r1=itemsIn(1).length, r2=itemsIn(2).length;
-  let h = `<div class="round-tabs">
-      <button class="rt ${ROUND===2?'on':''}" onclick="setRound(2)">🆕 2차 점검<span class="rt-sub">${r2}건 · 07-02</span></button>
-      <button class="rt ${ROUND===1?'on':''}" onclick="setRound(1)">📋 1차 점검<span class="rt-sub">${r1}건 · 05-10</span></button>
+  const rc={all:ITEMS.length, 1:ITEMS.filter(i=>i.round===1).length, 2:ITEMS.filter(i=>i.round===2).length};
+  let h = `<div class="rfilter">
+      <button class="rf ${RFILTER==='all'?'on':''}" onclick="setFilter('all')">전체 ${rc.all}</button>
+      <button class="rf ${RFILTER===1?'on':''}" onclick="setFilter(1)">1차 ${rc[1]}</button>
+      <button class="rf ${RFILTER===2?'on':''}" onclick="setFilter(2)">2차 ${rc[2]}</button>
     </div>
-    <button class="nav-home" id="navHome" onclick="go('home')">🏠 ${ROUND}차 전체 현황</button>
-    <button class="nav-need" id="navNeed" onclick="go('need')">⚠️ 확인이 필요한 곳 <span class="need-count">${needItems().length}</span></button>
-    <div class="nav-sect">공간별 보기</div>`;
+    <button class="nav-home" id="navHome" onclick="go('home')">📊 수리 현황</button>
+    <button class="nav-need" id="navNeed" onclick="go('need')">🚩 아직 남은 곳 <span class="need-count">${remainList().length}</span></button>
+    <div class="nav-sect">공간별 보기 (남음 많은 순)</div>`;
   LOCATIONS.forEach((L,i)=>{
     h += `<div class="nav-group" id="g${i}">
-      <button class="nav-loc" onclick="go('loc',${i})" aria-expanded="false">
+      <button class="nav-loc" onclick="navLoc(${i})" aria-expanded="false">
         <span class="nav-loc-name">${esc(L.emoji)} ${esc(L.name)}</span>
         <span class="nav-loc-meta">
-          <span class="dot ${L.unresolved? 'wait':'done'}"></span>
-          <span class="nav-count">${L.items.length}</span>
+          <span class="dot ${L.remain? 'wait':'done'}"></span>
+          <span class="nav-count">${L.done}·${L.remain}</span>
           <span class="nav-caret">▾</span>
         </span>
       </button>
@@ -391,7 +388,7 @@ function buildNav(){
             <span class="ni-status">${statusOf(it).emoji}</span>
             <span class="ni-text">
               <span class="ni-title">${esc(it.content)}</span>
-              <span class="ni-label">${esc(it.part||it.dtype)} · ${esc(it.dtype)} · DL ${it.sysno}</span>
+              <span class="ni-label">${it.round}차 · ${esc(it.dtype)} · DL ${it.sysno}</span>
             </span>
           </button>`).join('')}
       </div>
@@ -399,53 +396,64 @@ function buildNav(){
   });
   document.getElementById('nav').innerHTML = h;
 }
-function setRound(r){ if(ROUND===r) return; ROUND=r; buildLocations(); buildNav(); go('home'); }
+function setFilter(f){ if(RFILTER===f) return; RFILTER=f; buildLocations(); buildNav(); go('home'); }
+/* 드릴다운 토글 — 열린 공간을 다시 누르면 접힘(원복) */
+function navLoc(i){
+  const g=document.getElementById('g'+i);
+  if(g && g.classList.contains('open')){
+    g.classList.remove('open');
+    const btn=g.querySelector('.nav-loc'); if(btn){ btn.classList.remove('active'); btn.setAttribute('aria-expanded','false'); }
+  } else { go('loc', i); }
+}
 
-/* ===== 홈 ===== */
+/* ===== 홈 = 수리 현황 ===== */
 function viewHome(){
-  const its=itemsIn(ROUND);
+  const its=itemsF();
   const st={done:0,pending:0,reject:0,wait:0}; its.forEach(i=>st[statusOf(i).key]++);
-  const vc={confirmed:0,suspect:0,unverifiable:0,no_after:0}; its.forEach(i=>vc[verdictOf(i.sysno).key]++);
-  const need=needItems().length;
-  const isR2=ROUND===2;
-  const introText = isR2
-    ? `2차 점검(2026-07-02)에서<br>새로 접수한 <b style="color:var(--wait)">${its.length}건</b>이에요.<br>건설사 보수·답변 전이라<br>처리되면 업데이트됩니다.`
-    : `1차 점검(2026-05-10)에서<br>발견한 하자를 건설사가<br>어떻게 처리했는지<br><b>보수 사진 · 건설사 답변</b>으로 확인해요.`;
-  const aiSummary = its.some(i=>i.hasAfter) ? `<div class="ai-summary">🤖 <b>AI 사진 판단</b> (보수 전·후 자동 비교)<br>
-      보수 확인 <span class="s ok">${vc.confirmed}</span> · 확인 어려움 <span class="s unk">${vc.unverifiable}</span> · 미보수 의심 <span class="s bad">${vc.suspect}</span></div>` : '';
-  const replyNote = (st.reject||st.pending) ? `<div class="note"><b style="color:var(--reject)">${st.reject}곳</b>은 건설사가 <b>'하자 아님'</b>으로, <b style="color:var(--pending)">${st.pending}곳</b>은 <b>'입주 전 조치 예정'</b>으로 답변했어요. 각 항목에서 답변 내용을 확인하세요.</div>` : '';
+  const remain=st.pending+st.reject+st.wait;
+  const aiConfirmed=its.filter(i=>i.hasAfter && verdictOf(i.sysno).key==='confirmed').length;
+  const aiSuspect=its.filter(i=>i.hasAfter && verdictOf(i.sysno).key==='suspect').length;
+  const fLabel = RFILTER==='all' ? '1차 + 2차 점검' : RFILTER+'차 점검';
   return `<div class="wrap">
     <div class="intro">
-      <div class="intro-emoji">${isR2?'🆕':'🏡'}</div>
-      <div class="intro-title">검단 이편한세상 웰카운티<br>${ROUND}차 점검 하자 현황</div>
-      <div class="intro-text">${introText}</div>
+      <div class="intro-emoji">🏡</div>
+      <div class="intro-title">우리 집 하자,<br>어디까지 고쳐졌나요?</div>
+      <div class="intro-text">사전점검에서 발견한 하자를<br>건설사가 어디까지 수리했는지<br><b>공간별로 · 사진과 함께</b> 확인하세요.</div>
     </div>
-    <div class="stats">
-      <div class="stats-title">${ROUND}차 점검 · 전체 ${its.length}건</div>
-      <div class="stats-row">
-        <div class="stat done"><div class="stat-num">${st.done}</div><div class="stat-label">보수<br>완료</div></div>
-        <div class="stat pending"><div class="stat-num">${st.pending}</div><div class="stat-label">조치<br>예정</div></div>
-        <div class="stat reject"><div class="stat-num">${st.reject}</div><div class="stat-label">하자<br>아님</div></div>
-        <div class="stat wait"><div class="stat-num">${st.wait}</div><div class="stat-label">접수<br>대기</div></div>
-      </div>
-      ${replyNote}
-      ${aiSummary}
-      ${need? `<button class="home-cta" onclick="go('need')">⚠️ 확인이 필요한 ${need}곳 모아보기 →</button>`:''}
+    <div class="funnel">
+      <div class="fn-total">${fLabel} 전체 하자<b>${its.length}건</b></div>
+      <div class="fn-row done"><div class="fn-num">${st.done}</div><div class="fn-txt">
+        <div class="fn-lab">✅ 수리 완료</div>
+        <div class="fn-sub">건설사가 보수 후 사진 등록 · 🤖 AI 사진 재검증 통과 <b>${aiConfirmed}건</b></div></div></div>
+      <div class="fn-row remain"><div class="fn-num">${remain}</div><div class="fn-txt">
+        <div class="fn-lab">🚩 아직 남은 곳</div>
+        <div class="fn-sub">🏢 조치 예정 ${st.pending} · 🏢 하자 아님 ${st.reject} · 🔧 접수 대기 ${st.wait}</div></div></div>
+      ${aiSuspect? `<div class="fn-note">⚠️ '수리 완료' 중 <b>${aiSuspect}곳</b>은 AI가 <b>미보수 의심</b>으로 봤어요 — 재확인 권장</div>`:''}
+      ${remain? `<button class="home-cta" onclick="go('need')">🚩 아직 남은 ${remain}곳 모아보기 →</button>`:''}
     </div>
-    <div class="hint">위 <b>1차/2차</b>를 고르고,<br>왼쪽 위 <b>☰ 메뉴</b>에서 공간별로 확인하세요</div>
+    <div class="prog-title">📍 공간별 수리 현황</div>
+    <div class="prog-list">${LOCATIONS.map((L,i)=>`
+      <button class="prog-row" onclick="go('loc',${i})">
+        <span class="prog-emoji">${esc(L.emoji)}</span>
+        <span class="prog-name">${esc(L.name)}</span>
+        <span class="prog-badges">
+          <span class="pb done ${L.done?'':'zero'}">✅ ${L.done}</span>
+          <span class="pb remain ${L.remain?'':'zero'}">🚩 ${L.remain}</span>
+        </span>
+        <span class="prog-caret">›</span>
+      </button>`).join('')}</div>
+    <div class="hint">위 <b>전체 / 1차 / 2차</b>로 나눠 볼 수 있어요.<br>공간을 누르면 완료·남은 항목이 나와요.</div>
     <div class="foot">
-      <button class="csv-btn" onclick="exportCSV(ITEMS,'검단하자_전체${ITEMS.length}건.csv')">📄 전체(1·2차) CSV로 내보내기</button><br><br>
+      <button class="csv-btn" onclick="exportCSV(ITEMS,'하자현황_전체${ITEMS.length}건.csv')">📄 전체(1·2차) CSV로 내보내기</button><br><br>
       <b>1차 점검</b> 2026년 5월 9~10일 · <b>2차 점검</b> 2026년 7월 2일<br>
-      <b>건설사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
-      <b>세대</b> 2511동 0605호 (구 0111동)<br>
+      <b>시공사</b> DL이앤씨 · e편한세상 검단 웰카운티<br>
       사진을 누르면 크게 볼 수 있어요
     </div>
   </div>`;
 }
 
 function makeCard(it){
-  const S=statusOf(it), V=verdictOf(it.sysno);
-  const repaired=it.hasAfter;
+  const S=statusOf(it), V=verdictOf(it.sysno), repaired=it.hasAfter;
   let photos='';
   if(repaired && it.before.length && it.after.length){
     photos=`<div class="card-photos">
@@ -454,76 +462,63 @@ function makeCard(it){
   } else if(it.before.length){
     photos=`<div class="card-photos single"><div class="card-photo before"><img loading="lazy" src="${THUMB(it.before[0])}" alt="현재 사진"><span class="ba-label">현재</span></div></div>`;
   }
-  const aiBadge = (V.key!=='no_after') ? `<span class="verdict ${V.meta.cls}">🤖 ${V.meta.label}</span>` : '';
-  const dateTxt = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수 완료`
+  const aiBadge=(V.key!=='no_after')?`<span class="verdict ${V.meta.cls}">🤖 ${V.meta.label}</span>`:'';
+  const dateTxt = repaired && it.repairDate ? `🗓 ${fmtDate(it.repairDate)} 보수`
     : S.key==='reject' ? '🏢 건설사: 하자 아님으로 답변'
     : S.key==='pending' ? '🏢 건설사: 입주 전 조치 예정'
     : '🔧 접수 · 처리 대기';
   return `<div class="card" role="button" tabindex="0" onclick="go('item','${it.sysno}')">
     ${photos}
     <div class="card-body">
-      <div class="card-badges"><span class="badge ${S.cls}">${S.emoji} ${S.label}</span>${aiBadge}</div>
+      <div class="card-badges"><span class="rlabel">${it.round}차</span><span class="badge ${S.cls}">${S.emoji} ${S.label}</span>${aiBadge}</div>
       <div class="card-title">${esc(it.content)}</div>
-      <div class="card-ident">
-        <span class="chip">${esc(it.part||it.dtype)}</span>
-        <span class="chip">${esc(it.dtype)}</span>
-        <span class="chip num">DL ${it.sysno}</span>
-      </div>
+      <div class="card-ident"><span class="chip">${esc(it.dtype)}</span><span class="chip num">DL ${it.sysno}</span></div>
       <div class="card-date">${dateTxt}</div>
     </div></div>`;
 }
 
 function viewLoc(i){
   const L=LOCATIONS[i]; if(!L) return viewHome();
+  const remain=L.items.filter(it=>!isDone(it)), done=L.items.filter(isDone);
+  const sec=(title,cls,arr)=> arr.length? `<div class="list-sec ${cls}">${title}<span class="c">${arr.length}곳</span></div><div class="list">${arr.map(makeCard).join('')}</div>`:'';
   return `<div class="page-head">
       <div class="ph-loc">${esc(L.emoji)} ${esc(L.name)}</div>
-      <div class="ph-sub">${ROUND}차 · 전체 ${L.items.length}곳 · <b class="done">보수 완료 ${L.done}</b> · <b class="wait">확인 필요 ${L.unresolved}</b></div>
+      <div class="ph-sub">전체 ${L.items.length}곳 · <b class="done">수리 완료 ${done.length}</b> · <b class="wait">남음 ${remain.length}</b></div>
     </div>
-    <div class="list">${L.items.map(makeCard).join('')}</div>`;
+    ${sec('🚩 아직 남은 곳','remain',remain)}
+    ${sec('✅ 수리 완료','done',done)}`;
 }
 
 function viewNeed(){
-  const items=needItems();
-  const nw=items.filter(i=>statusOf(i).key==='wait').length;
-  const nr=items.filter(i=>statusOf(i).key==='reject').length;
-  const nsus=items.filter(i=>statusOf(i).key!=='wait'&&statusOf(i).key!=='reject'&&verdictOf(i.sysno).key==='suspect').length;
+  const items=remainList();
+  const c={wait:0,reject:0,pending:0}; items.forEach(i=>c[statusOf(i).key]++);
   return `<div class="page-head">
-      <div class="ph-loc">⚠️ 확인이 필요한 곳</div>
-      <div class="ph-sub">${ROUND}차 · ${items.length}곳 · <b class="wait">접수 대기 ${nw}</b> · <b class="reject">하자 아님 ${nr}</b>${nsus?` · 미보수 의심 ${nsus}`:''}</div>
+      <div class="ph-loc">🚩 아직 남은 곳</div>
+      <div class="ph-sub">${RFILTER==='all'?'전체':RFILTER+'차'} · ${items.length}곳 · <b class="wait">접수 대기 ${c.wait}</b> · <b class="reject">하자 아님 ${c.reject}</b> · 조치 예정 ${c.pending}</div>
     </div>
-    <div class="section-desc">아직 보수가 확인되지 않았거나, 건설사가 '하자 아님'으로 답변한 항목이에요. 직접 점검하거나 재이의가 필요할 수 있어요.</div>
-    <div style="max-width:760px;margin:0 auto;padding:0 18px 10px;"><button class="csv-btn" onclick="exportCSV(needItems(),'검단하자_${ROUND}차_확인필요${items.length}건.csv')">📄 이 목록 CSV로 내보내기</button></div>
+    <div class="section-desc">아직 수리되지 않았거나, 건설사가 '하자 아님/조치 예정'으로 답변한 항목이에요. 직접 점검하거나 재요청·재이의가 필요할 수 있어요.</div>
+    <div style="max-width:760px;margin:0 auto;padding:0 18px 10px;"><button class="csv-btn" onclick="exportCSV(remainList(),'하자현황_남은곳${items.length}건.csv')">📄 이 목록 CSV로 내보내기</button></div>
     <div class="list">${items.map(makeCard).join('')}</div>`;
 }
 
 function viewItem(sysno){
-  const it=ITEMS.find(x=>x.sysno===sysno);
-  if(!it) return viewHome();
+  const it=ITEMS.find(x=>x.sysno===sysno); if(!it) return viewHome();
   const S=statusOf(it), V=verdictOf(sysno), repaired=it.hasAfter;
-
-  // 1) 건설사 처리 상태 (+ 답변)
-  const bsSub = S.key==='done' ? `${fmtDate(it.repairDate)} 보수 등록`
-    : S.key==='wait' ? '아직 접수 상태 — 건설사 처리(보수/답변) 전이에요'
-    : '';
+  const bsSub = S.key==='done' ? `${fmtDate(it.repairDate)} 보수 등록` : S.key==='wait' ? '아직 접수 상태 — 건설사 처리(보수/답변) 전이에요' : '';
   const builder = `<div class="builder-status ${S.cls}">
       <div class="bs-label">건설사(DL이앤씨) 처리 상태</div>
       <div class="bs-main"><span class="bs-ico">${S.emoji}</span><span class="bs-title">${S.label}</span></div>
       ${bsSub?`<div class="bs-sub">${bsSub}</div>`:''}
       ${it.dlReply?`<div class="bs-reply"><span class="q">건설사 답변</span>“${esc(it.dlReply)}”</div>`:''}
     </div>`;
-
-  // 2) 교차검증 (관련 이력)
   const xr=xrefOf(it);
   const xref = xr.length ? `<div class="xref">
       <div class="xref-h">🔗 관련 점검 이력 (${it.round===1?'2차':'1차'})</div>
-      <div class="xref-note">같은 부위·유형의 ${it.round===1?'2차':'1차'} 점검 항목이에요. 눌러서 사진·상태를 비교해 보세요.</div>
+      <div class="xref-note">같은 부위·유형의 ${it.round===1?'2차':'1차'} 항목이에요. 눌러서 사진·상태를 비교해 보세요.</div>
       ${xr.map(o=>`<button class="xref-item" onclick="goItem('${o.sysno}')">
         <span class="xref-round">${o.round}차</span>
-        <span class="xref-txt">${esc(o.content)}<span class="xref-st">${statusOf(o).emoji} ${statusOf(o).label}</span></span>
-      </button>`).join('')}
+        <span class="xref-txt">${esc(o.content)}<span class="xref-st">${statusOf(o).emoji} ${statusOf(o).label}</span></span></button>`).join('')}
     </div>` : '';
-
-  // 3) 사진
   let photos='';
   if(repaired){
     photos=`<div class="section-label">📷 보수 전 · 후 사진 (좌우 비교)</div>
@@ -534,32 +529,22 @@ function viewItem(sysno){
           <div class="cmp-imgs">${it.after.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="보수 후">`).join('')}</div></div>
       </div>`;
   } else {
-    photos=`<div class="section-label">📷 현재 사진 (${it.round===1?'1차 점검':'2차 점검'})</div>
+    photos=`<div class="section-label">📷 현재 사진 (${it.round}차 점검)</div>
       <div class="cmp-single"><div class="cmp-col"><div class="cmp-col-h">현재 모습</div>
         <div class="cmp-imgs">${it.before.length? it.before.map(s=>`<img src="${THUMB(s)}" loading="lazy" onclick="openModal('${s}')" alt="현재">`).join('') : '<div class="no-photo">사진이 없습니다</div>'}</div></div></div>`;
   }
-
-  // 4) AI (사진 있을 때만)
   const ai = repaired ? `<div class="ai-box ${V.meta.cls}">
       <div class="ai-h">🤖 AI 보수 판단 <span class="ai-tag">참고용</span></div>
       <div class="ai-verdict">${V.meta.emoji} ${V.meta.label}</div>
       <div class="ai-reason">${esc(V.reason)}</div>
       <div class="ai-disc">Claude AI가 보수 전·후 사진을 비교한 추정이에요. '증거'가 아니라 재점검 체크용이며, 최종 확인은 직접 점검을 권장해요.</div>
     </div>` : '';
-
-  // 5) 식별 + DL
   const identDL=`<div class="ident-box">
       <div class="ib-title">식별 정보</div>
-      <div class="ident-chips">
-        <span class="chip">${it.round}차 점검</span>
-        <span class="chip">${esc(it.loc)}</span>
-        <span class="chip">${esc(it.dtype)}</span>
-        <span class="chip num">DL번호 ${it.sysno}</span>
-      </div>
+      <div class="ident-chips"><span class="chip">${it.round}차 점검</span><span class="chip">${esc(it.loc)}</span><span class="chip">${esc(it.dtype)}</span><span class="chip num">DL번호 ${it.sysno}</span></div>
     </div>
     <a class="dl-link" href="${DLBASE}${it.sysno}" target="_blank" rel="noopener">🔧 DL 보수시스템에서 열기 · 수정 →</a>
     <div class="dl-hint">건설사 보수 시스템(로그인 필요)에서 이 항목을 바로 확인·수정할 수 있어요</div>`;
-
   const G=groupOf(it);
   return `<button class="detail-back" onclick="go('loc',${locIdx(groupKeyOf(it))})">← 목록으로</button>
     <div class="detail-hero"><div class="dh-wrap">
@@ -596,17 +581,11 @@ function openGroup(i){
 }
 function render(){
   document.getElementById('modal').classList.remove('active');
-  const h=location.hash.slice(1);
-  const main=document.getElementById('main');
+  const h=location.hash.slice(1), main=document.getElementById('main');
   let view='home', arg=null;
   if(h.startsWith('loc/')){ view='loc'; arg=parseInt(h.slice(4),10); }
   else if(h.startsWith('item/')){ view='item'; arg=h.slice(5); }
   else if(h==='need'){ view='need'; }
-
-  if(view==='item'){                                   // 딥링크가 다른 차수면 차수 전환
-    const it=ITEMS.find(x=>x.sysno===arg);
-    if(it && it.round!==ROUND){ ROUND=it.round; buildLocations(); buildNav(); }
-  }
   if(view==='loc' && LOCATIONS[arg]) main.innerHTML=viewLoc(arg);
   else if(view==='item' && ITEMS.find(x=>x.sysno===arg)) main.innerHTML=viewItem(arg);
   else if(view==='need') main.innerHTML=viewNeed();
@@ -623,21 +602,21 @@ function go(view, arg){
   else if(view==='item') location.hash='item/'+arg;
   if(location.hash===prev) render();
 }
-function goItem(sysno){                                 // 교차검증 링크(차수 넘나듦)
+function goItem(sysno){                            // 교차검증 링크 (필터 무관하게 열기)
   const it=ITEMS.find(x=>x.sysno===sysno); if(!it) return;
-  if(ROUND!==it.round){ ROUND=it.round; buildLocations(); buildNav(); }
+  if(RFILTER!=='all' && RFILTER!==it.round){ RFILTER='all'; buildLocations(); buildNav(); }
   go('item', sysno);
 }
 window.addEventListener('hashchange', render);
 
-/* ===== 드로어 ===== */
+/* 드로어 */
 function openDrawer(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('scrim').classList.add('show'); }
 function closeDrawer(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('scrim').classList.remove('show'); }
 document.getElementById('btnMenu').addEventListener('click', openDrawer);
 document.getElementById('scrim').addEventListener('click', closeDrawer);
 document.getElementById('btnHome').addEventListener('click', ()=>go('home'));
 
-/* ===== 모달 ===== */
+/* 모달 */
 function openModal(src){ document.getElementById('modalImg').src=src; document.getElementById('modal').classList.add('active'); document.getElementById('modalClose').focus(); }
 document.getElementById('modalClose').addEventListener('click', ()=>document.getElementById('modal').classList.remove('active'));
 document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') document.getElementById('modal').classList.remove('active'); });
