@@ -77,7 +77,7 @@ button{font-family:inherit;cursor:pointer;}
 @media print{
   .topbar,.sidebar,.scrim,.btn-menu,.detail-back,.csv-btn,.home-cta,.modal,.dl-link{display:none!important;}
   .main{padding:0;} body{background:#fff;font-size:13px;}
-  .card,.ai-box,.builder-status,.cmp-photos,.xref,.funnel{break-inside:avoid;}
+  .card,.ai-box,.builder-status,.cmp-photos,.xref,.tl,.funnel{break-inside:avoid;}
   .cmp-imgs img{max-height:8cm;width:auto;}
 }
 .nav-sect{font-size:var(--f-xs);font-weight:700;color:var(--muted);padding:4px 8px 8px;letter-spacing:.02em;}
@@ -123,6 +123,7 @@ button{font-family:inherit;cursor:pointer;}
 .fn-row.done .fn-lab{color:var(--done);} .fn-row.remain .fn-lab{color:var(--wait);}
 .fn-sub{font-size:var(--f-xs);color:var(--soft);margin-top:4px;line-height:1.5;}
 .fn-note{margin-top:6px;padding:12px 14px;background:#FCEAE7;border-radius:12px;font-size:var(--f-xs);color:#8A2A20;line-height:1.5;font-weight:600;}
+.fn-recur{margin-top:6px;padding:12px 14px;background:var(--rejectBg);border:1.5px solid var(--rejectLine);border-radius:12px;font-size:var(--f-xs);color:var(--reject);line-height:1.5;font-weight:600;}
 
 .prog-title{max-width:760px;margin:26px auto 8px;padding:0 20px;font-size:var(--f-md);font-weight:800;color:var(--text);}
 .prog-list{max-width:760px;margin:0 auto;padding:0 18px 10px;}
@@ -167,6 +168,7 @@ button{font-family:inherit;cursor:pointer;}
 .badge.pending{background:var(--pendingBg);color:var(--pending);border-color:var(--pendingLine);}
 .badge.reject{background:var(--rejectBg);color:var(--reject);border-color:var(--rejectLine);}
 .badge.wait{background:var(--waitBg);color:var(--wait);border-color:var(--waitLine);}
+.badge.recur{background:var(--rejectBg);color:var(--reject);border-color:var(--rejectLine);}
 .verdict{display:inline-flex;align-items:center;gap:5px;font-size:var(--f-xs);font-weight:800;padding:5px 12px;border-radius:999px;border:1.5px solid;}
 .verdict.ok{background:var(--doneBg);color:var(--done);border-color:var(--doneLine);}
 .verdict.bad{background:#FCEAE7;color:var(--red);border-color:#F3B4AC;}
@@ -206,6 +208,24 @@ button{font-family:inherit;cursor:pointer;}
 .xref-round{font-weight:800;color:#fff;background:var(--teal);border-radius:7px;padding:2px 9px;font-size:14px;flex:0 0 auto;}
 .xref-txt{flex:1;min-width:0;}
 .xref-st{font-size:13px;color:var(--muted);display:block;margin-top:2px;}
+/* 🔁 1차→2차 변화 타임라인 */
+.tl{max-width:760px;margin:14px auto 0;width:calc(100% - 36px);border:2px solid var(--rejectLine);background:var(--rejectBg);border-radius:16px;padding:16px 18px;}
+.tl-h{font-size:var(--f-sm);font-weight:800;color:var(--reject);margin-bottom:4px;}
+.tl-note{font-size:var(--f-xs);color:var(--soft);margin-bottom:12px;line-height:1.5;}
+.tl-row{width:100%;display:flex;align-items:center;gap:10px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;}
+.tl-row.cur{border-color:var(--reject);background:#fff;box-shadow:var(--sh-sm);}
+.tl-row:not(.cur):active{background:var(--bg);}
+.tl-round{font-weight:800;color:#fff;background:var(--soft);border-radius:7px;padding:3px 10px;font-size:14px;flex:0 0 auto;}
+.tl-row.cur .tl-round{background:var(--reject);}
+.tl-thumb{width:46px;height:46px;border-radius:8px;object-fit:cover;flex:0 0 auto;background:#E8EEEC;}
+.tl-thumb.noimg{background:var(--bg);}
+.tl-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.tl-st{font-size:var(--f-xs);font-weight:800;}
+.tl-st.done{color:var(--done);} .tl-st.reject{color:var(--reject);} .tl-st.pending{color:var(--pending);} .tl-st.wait{color:var(--wait);}
+.tl-date{font-size:13px;color:var(--muted);}
+.tl-here{font-size:13px;font-weight:800;color:var(--reject);flex:0 0 auto;}
+.tl-go{font-size:18px;color:var(--muted);flex:0 0 auto;}
+.tl-arrow{text-align:center;color:var(--reject);font-size:12px;line-height:1.3;margin:2px 0;}
 .section-label{max-width:760px;margin:22px auto 0;padding:0 18px;font-size:var(--f-sm);font-weight:800;color:var(--text);}
 .cmp-photos{max-width:760px;margin:10px auto 0;padding:0 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
 .cmp-col{min-width:0;}
@@ -317,12 +337,16 @@ function verdictOf(sysno){
 let RFILTER='all';
 function itemsF(){ return RFILTER==='all' ? ITEMS : ITEMS.filter(i=>i.round===RFILTER); }
 
-/* 교차검증(1↔2차) */
-function words(s){ return String(s||'').replace(/[^가-힣0-9a-zA-Z]/g,' ').split(/\s+/).filter(w=>w.length>=2); }
-function xrefOf(it){
-  const other=it.round===1?2:1, mine=new Set(words(it.content));
-  return ITEMS.filter(o=>o.round===other && o.loc===it.loc && o.dtype===it.dtype).filter(o=>words(o.content).some(w=>mine.has(w)));
-}
+/* 교차검증(1↔2차) — 수작업 검증한 재점검 매칭(XGROUPS) */
+const RECUR={};                                  // sysno -> 같은 spot 전체 sysno(회차·접수일 순)
+(typeof XGROUPS!=='undefined'?XGROUPS:[]).forEach(g=>{
+  const order=g.map(sn=>ITEMS.find(i=>i.sysno===sn)).filter(Boolean)
+    .sort((a,b)=>a.round-b.round || String(a.rcptDate).localeCompare(String(b.rcptDate)) || a.sysno.localeCompare(b.sysno))
+    .map(i=>i.sysno);
+  order.forEach(sn=>RECUR[sn]=order);
+});
+const isRecur = it => !!RECUR[it.sysno];         // 1·2차에 걸쳐 재접수된 곳
+function recurGroup(it){ return (RECUR[it.sysno]||[]).map(sn=>ITEMS.find(i=>i.sysno===sn)); }
 
 /* CSV */
 function csvCell(s){ s=String(s==null?'':s); return /[",\n\r]/.test(s)? '"'+s.replace(/"/g,'""')+'"' : s; }
@@ -413,6 +437,7 @@ function viewHome(){
   const remain=st.pending+st.reject+st.wait;
   const aiConfirmed=its.filter(i=>i.hasAfter && verdictOf(i.sysno).key==='confirmed').length;
   const aiSuspect=its.filter(i=>i.hasAfter && verdictOf(i.sysno).key==='suspect').length;
+  const recurSpots=(typeof XGROUPS!=='undefined'?XGROUPS:[]).length;   // 1·2차 재접수 곳(모두 교차라운드)
   const fLabel = RFILTER==='all' ? '1차 + 2차 점검' : RFILTER+'차 점검';
   return `<div class="wrap">
     <div class="intro">
@@ -429,6 +454,7 @@ function viewHome(){
         <div class="fn-lab">🚩 아직 남은 곳</div>
         <div class="fn-sub">🏢 조치 예정 ${st.pending} · 🏢 하자 아님 ${st.reject} · 🔧 접수 대기 ${st.wait}</div></div></div>
       ${aiSuspect? `<div class="fn-note">⚠️ '수리 완료' 중 <b>${aiSuspect}곳</b>은 AI가 <b>미보수 의심</b>으로 봤어요 — 재확인 권장</div>`:''}
+      ${(RFILTER!==1 && recurSpots)? `<div class="fn-recur">🔁 1차에 처리됐다가 <b>2차에 다시 접수된 곳 ${recurSpots}곳</b> — 각 항목 상세에서 회차별 변화를 비교할 수 있어요</div>`:''}
       ${remain? `<button class="home-cta" onclick="go('need')">🚩 아직 남은 ${remain}곳 모아보기 →</button>`:''}
     </div>
     <div class="prog-title">📍 공간별 수리 현황</div>
@@ -470,7 +496,7 @@ function makeCard(it){
   return `<div class="card" role="button" tabindex="0" onclick="go('item','${it.sysno}')">
     ${photos}
     <div class="card-body">
-      <div class="card-badges"><span class="rlabel">${it.round}차</span><span class="badge ${S.cls}">${S.emoji} ${S.label}</span>${aiBadge}</div>
+      <div class="card-badges"><span class="rlabel">${it.round}차</span><span class="badge ${S.cls}">${S.emoji} ${S.label}</span>${aiBadge}${isRecur(it)?'<span class="badge recur">🔁 재점검</span>':''}</div>
       <div class="card-title">${esc(it.content)}</div>
       <div class="card-ident"><span class="chip">${esc(it.dtype)}</span><span class="chip num">DL ${it.sysno}</span></div>
       <div class="card-date">${dateTxt}</div>
@@ -511,14 +537,27 @@ function viewItem(sysno){
       ${bsSub?`<div class="bs-sub">${bsSub}</div>`:''}
       ${it.dlReply?`<div class="bs-reply"><span class="q">건설사 답변</span>“${esc(it.dlReply)}”</div>`:''}
     </div>`;
-  const xr=xrefOf(it);
-  const xref = xr.length ? `<div class="xref">
-      <div class="xref-h">🔗 관련 점검 이력 (${it.round===1?'2차':'1차'})</div>
-      <div class="xref-note">같은 부위·유형의 ${it.round===1?'2차':'1차'} 항목이에요. 눌러서 사진·상태를 비교해 보세요.</div>
-      ${xr.map(o=>`<button class="xref-item" onclick="goItem('${o.sysno}')">
-        <span class="xref-round">${o.round}차</span>
-        <span class="xref-txt">${esc(o.content)}<span class="xref-st">${statusOf(o).emoji} ${statusOf(o).label}</span></span></button>`).join('')}
-    </div>` : '';
+  const grp=recurGroup(it);
+  let timeline='';
+  if(grp.length>1){
+    const disputed=grp.some(o=>o.round===1 && (o.hasAfter||o.dlReplyCat==='reject'));
+    const rows=grp.map(o=>{
+      const so=statusOf(o), cur=o.sysno===it.sysno;
+      const th=(o.hasAfter&&o.after[0])?THUMB(o.after[0]):(o.before[0]?THUMB(o.before[0]):'');
+      return `<button class="tl-row ${cur?'cur':''}" ${cur?'disabled':''} onclick="goItem('${o.sysno}')">
+        <span class="tl-round">${o.round}차</span>
+        ${th?`<img class="tl-thumb" loading="lazy" src="${th}" alt="">`:'<span class="tl-thumb noimg"></span>'}
+        <span class="tl-txt"><span class="tl-st ${so.cls}">${so.emoji} ${so.label}</span>
+          <span class="tl-date">${fmtDate(o.rcptDate)} 접수${o.hasAfter&&o.repairDate?` · ${fmtDate(o.repairDate)} 보수`:''}</span></span>
+        ${cur?'<span class="tl-here">지금</span>':'<span class="tl-go">›</span>'}
+      </button>`;
+    }).join('<div class="tl-arrow">▼</div>');
+    timeline=`<div class="tl">
+      <div class="tl-h">🔁 1차 → 2차 변화 (같은 곳 재점검)</div>
+      <div class="tl-note">${disputed?"1차에 <b>수리 완료·하자 아님</b>으로 처리됐는데 <b>2차에 다시 접수</b>된 곳이에요. 회차별 사진·상태를 비교해 보세요.":"같은 곳이 1·2차에 걸쳐 접수됐어요. 회차별로 비교해 보세요."}</div>
+      ${rows}
+    </div>`;
+  }
   let photos='';
   if(repaired){
     photos=`<div class="section-label">📷 보수 전 · 후 사진 (좌우 비교)</div>
@@ -537,7 +576,7 @@ function viewItem(sysno){
       <div class="ai-h">🤖 AI 보수 판단 <span class="ai-tag">참고용</span></div>
       <div class="ai-verdict">${V.meta.emoji} ${V.meta.label}</div>
       <div class="ai-reason">${esc(V.reason)}</div>
-      <div class="ai-disc">Claude AI가 보수 전·후 사진을 비교한 추정이에요. '증거'가 아니라 재점검 체크용이며, 최종 확인은 직접 점검을 권장해요.</div>
+      <div class="ai-disc">AI가 보수 전·후 사진을 비교한 추정이에요. '증거'가 아니라 재점검 체크용이며, 최종 확인은 직접 점검을 권장해요.</div>
     </div>` : '';
   const identDL=`<div class="ident-box">
       <div class="ib-title">식별 정보</div>
@@ -553,7 +592,7 @@ function viewItem(sysno){
       <div class="desc">${esc(it.content)}</div>
     </div></div>
     ${builder}
-    ${xref}
+    ${timeline}
     ${photos}
     ${ai}
     ${identDL}
