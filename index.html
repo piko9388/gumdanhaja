@@ -303,10 +303,11 @@ const STATUS_META = {
   wait:   {emoji:'🔧', label:'접수 · 대기',       cls:'wait'},
 };
 function statusOf(it){
+  // 건설사 답변(하자 아님/조치 예정)은 사진 등록보다 우선 — '하자 아님'인데 사진 있다고 '완료'로 집계하면 협상 근거가 훼손됨
   let key='wait';
-  if(it.hasAfter) key='done';
+  if(it.dlReplyCat==='reject') key='reject';
   else if(it.dlReplyCat==='pending') key='pending';
-  else if(it.dlReplyCat==='reject') key='reject';
+  else if(it.hasAfter) key='done';
   return { key, ...STATUS_META[key] };
 }
 const isDone = it => statusOf(it).key==='done';   // 물리적 수리 완료(사진 有)
